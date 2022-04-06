@@ -1,0 +1,16 @@
+spring:
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    username: root
+    password: franK1100
+    url: jdbc:mysql://47.106.137.238:3306/test?serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+logging:
+  level:
+    root: info
+    com:
+      gargoylesoftware: off
