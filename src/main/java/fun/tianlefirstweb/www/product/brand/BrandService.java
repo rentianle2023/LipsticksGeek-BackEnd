@@ -20,12 +20,12 @@ public class BrandService {
         brandRepository.save(brand);
     }
 
-    public Brand getBrandByName(String brandName){
+    public Brand getByName(String brandName){
         return brandRepository.findBrandByName(brandName)
                 .orElseThrow(() -> new IllegalArgumentException(String.format("%s品牌不存在",brandName)));
     }
 
-    public Brand getBrand(Integer brandId){
+    public Brand getById(Integer brandId){
         return brandRepository.findById(brandId)
             .orElseThrow(() -> new IllegalArgumentException(String.format("id为%d的品牌不存在",brandId)));
     }

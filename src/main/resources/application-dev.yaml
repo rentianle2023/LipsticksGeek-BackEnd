@@ -9,6 +9,17 @@ spring:
     password: franK1100
     url: jdbc:mysql://47.106.137.238:3306/test?serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-timeout: 60000
+      validation-timeout: 3000
+      idle-timeout: 60000
+      login-timeout: 5
+      max-lifetime: 60000
+      maximum-pool-size: 10
+      minimum-idle: 10
+      read-only: false
+  elasticsearch:
+    url : 47.106.137.238:9200
 logging:
   level:
     root: info

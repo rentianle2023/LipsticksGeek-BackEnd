@@ -1,5 +1,8 @@
 package fun.tianlefirstweb.www.crawler.fetcher;
 
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlDivision;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import fun.tianlefirstweb.www.crawler.BrandInfo;
 import fun.tianlefirstweb.www.product.lipstick.Lipstick;
 import fun.tianlefirstweb.www.product.lipstickColor.LipstickColor;
@@ -21,8 +24,7 @@ public class YslFetcher implements Fetcher {
         try {
             return Jsoup.connect(BrandInfo.YSL.getFetchUrl()).get();
         } catch (IOException e) {
-            //TODO: handle exception
-            throw new RuntimeException("");
+            throw new RuntimeException("获取网页失败");
         }
     }
 
@@ -63,8 +65,8 @@ public class YslFetcher implements Fetcher {
     }
 
     private LipstickColor getLipstickColorInfo(Element lipstickColorDiv){
-        String backgroundColor = lipstickColorDiv.attr("style");
+        String color = lipstickColorDiv.attr("style");
         String colorName = lipstickColorDiv.attr("title");
-        return new LipstickColor(colorName, backgroundColor);
+        return new LipstickColor(colorName, color);
     }
 }

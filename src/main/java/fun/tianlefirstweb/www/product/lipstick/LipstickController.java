@@ -3,8 +3,6 @@ package fun.tianlefirstweb.www.product.lipstick;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("lipsticks")
 public class LipstickController {
@@ -15,15 +13,16 @@ public class LipstickController {
         this.lipstickService = lipstickService;
     }
 
-    @GetMapping("/{brandId}")
-    public List<Lipstick> getLipsticks(@PathVariable Integer brandId){
-        return lipstickService.getLipsticks(brandId);
+
+    @GetMapping("/{lipstickId}")
+    public Lipstick getLipstick(@PathVariable Integer lipstickId){
+        return lipstickService.getById(lipstickId);
     }
 
     @PutMapping("/{lipstickId}")
     public ResponseEntity<?> updateLipstick(@PathVariable Integer lipstickId,
                                             @RequestBody Lipstick lipstick){
-        lipstickService.updateLipstick(lipstickId,lipstick.getName(),lipstick.getPrice(),lipstick.getImageUrl());
+        lipstickService.update(lipstickId,lipstick.getName(),lipstick.getPrice(),lipstick.getImageUrl());
         return ResponseEntity.ok().build();
     }
 }

@@ -22,14 +22,16 @@ public class CrawlerService {
         this.brandService = brandService;
     }
 
-    public void fetchAndSaveLipsticks(String brandName){
-        List<Lipstick> lipsticks = fetcherFactory.getFetcher(brandName).fetch();
-        bindBrandWithLipsticks(lipsticks,brandName);
+    public void fetchAndSave(String brandName){
+        List<Lipstick> lipsticks = fetcherFactory
+                .getFetcher(brandName)
+                .fetch();
+        bind(lipsticks,brandName);
         lipstickService.saveAll(lipsticks);
     }
 
-    private void bindBrandWithLipsticks(List<Lipstick> lipsticks, String brandName){
-        Brand brand = brandService.getBrandByName(brandName);
+    private void bind(List<Lipstick> lipsticks, String brandName){
+        Brand brand = brandService.getByName(brandName);
         lipsticks.forEach(lipstick -> lipstick.setBrand(brand));
     }
 }

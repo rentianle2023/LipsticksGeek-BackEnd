@@ -17,13 +17,13 @@ public class LipstickColorController {
 
     @GetMapping("/{lipstickId}")
     public ResponseEntity<List<LipstickColor>> getLipstickColors(@PathVariable Integer lipstickId){
-        return ResponseEntity.ok(lipstickColorService.getLipstickColors(lipstickId));
+        return ResponseEntity.ok(lipstickColorService.getByLipstickId(lipstickId));
     }
 
     @PutMapping("/{lipstickColorId}")
     public ResponseEntity<?> updateLipstickColor(@PathVariable Integer lipstickColorId,
                                                  @RequestBody LipstickColor lipstickColor){
-        lipstickColorService.updateLipstickColor(lipstickColorId,lipstickColor.getName(),lipstickColor.getBackgroundColor());
+        lipstickColorService.updateLipstickColor(lipstickColorId,lipstickColor.getName(),lipstickColor.getHexColor());
         return ResponseEntity.ok().build();
     }
 }

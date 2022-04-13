@@ -13,20 +13,20 @@ public class LipstickColorService {
         this.lipstickColorRepository = lipstickColorRepository;
     }
 
-    public List<LipstickColor> getLipstickColors(Integer lipstickId){
+    public List<LipstickColor> getByLipstickId(Integer lipstickId){
         return lipstickColorRepository.findLipstickColorByLipstickId(lipstickId)
                 .orElseThrow(() -> new IllegalArgumentException(String.format("id为%d的口红不存在",lipstickId)));
     }
 
-    public LipstickColor getLipstickColor(Integer lipstickColorId){
+    public LipstickColor getById(Integer lipstickColorId){
         return lipstickColorRepository.findById(lipstickColorId)
                 .orElseThrow(() -> new IllegalArgumentException(String.format("id为%d的口红色号不存在",lipstickColorId)));
     }
 
-    public void updateLipstickColor(Integer lipstickColorId, String newName, String newBackgroundColor){
-        LipstickColor color = getLipstickColor(lipstickColorId);
+    public void updateLipstickColor(Integer lipstickColorId, String newName, String newColor){
+        LipstickColor color = getById(lipstickColorId);
         if(newName != null) color.setName(newName);
-        if(newBackgroundColor != null) color.setBackgroundColor(newBackgroundColor);
+        if(newColor != null) color.setHexColor(newColor);
         lipstickColorRepository.save(color);
     }
 }

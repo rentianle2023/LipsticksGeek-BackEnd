@@ -1,5 +1,6 @@
 package fun.tianlefirstweb.www.crawler;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,13 +13,14 @@ public class CrawlerController {
 
     private final CrawlerService crawlerService;
 
+    @Autowired
     public CrawlerController(CrawlerService crawlerService) {
         this.crawlerService = crawlerService;
     }
 
     @PostMapping("/{brandName}")
     public ResponseEntity<?> fetchByBrandName(@PathVariable String brandName){
-        crawlerService.fetchAndSaveLipsticks(brandName);
+        crawlerService.fetchAndSave(brandName);
         return ResponseEntity.ok().build();
     }
 }

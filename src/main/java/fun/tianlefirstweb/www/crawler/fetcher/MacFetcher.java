@@ -53,8 +53,8 @@ public class MacFetcher implements Fetcher {
     }
 
     private LipstickColor getLipstickColorInfo(Element lipstickColorDiv){
-        String backgroundColor = lipstickColorDiv.attr("style");
+        String color = lipstickColorDiv.attr("style");
         String colorName = lipstickColorDiv.attr("title");
-        return new LipstickColor(colorName, backgroundColor);
+        return new LipstickColor(colorName, color);
     }
 }

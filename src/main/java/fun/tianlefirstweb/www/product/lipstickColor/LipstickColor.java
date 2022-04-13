@@ -19,22 +19,22 @@ public class LipstickColor {
     private Integer id;
 
     private String name;
-    private String backgroundColor;
+    private String hexColor;
 
     @ManyToOne
     @JoinColumn(name = "lipstick_id")
     @JsonBackReference
     private Lipstick lipstick;
 
-    public LipstickColor(String name, String backgroundColor) {
+    public LipstickColor(String name, String hexColor) {
         this.name = name;
-        this.backgroundColor = backgroundColor;
-        trimBackgroundColor();
+        this.hexColor = hexColor;
+        trimHexColor();
     }
 
-    public void trimBackgroundColor(){
-        int beginIndex = backgroundColor.indexOf("#");
-        if(beginIndex == -1 || beginIndex + 7 > backgroundColor.length()) return;
-        this.backgroundColor = backgroundColor.substring(beginIndex,beginIndex + 7);
+    public void trimHexColor(){
+        int beginIndex = hexColor.indexOf("#");
+        if(beginIndex == -1 || beginIndex + 7 > hexColor.length()) return;
+        this.hexColor = hexColor.substring(beginIndex,beginIndex + 7);
     }
 }

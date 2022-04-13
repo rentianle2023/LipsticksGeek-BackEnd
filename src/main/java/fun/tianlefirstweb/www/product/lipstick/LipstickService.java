@@ -21,18 +21,18 @@ public class LipstickService {
         lipstickRepository.saveAll(lipsticks);
     }
 
-    public List<Lipstick> getLipsticks(Integer brandId){
+    public List<Lipstick> getByBrandId(Integer brandId){
         return lipstickRepository.findLipsticksByBrandId(brandId)
                 .orElseThrow(() -> new IllegalArgumentException(String.format("id为%d的品牌不存在",brandId)));
     }
 
-    public Lipstick getLipstick(Integer lipstickId){
+    public Lipstick getById(Integer lipstickId){
         return lipstickRepository.findById(lipstickId)
                 .orElseThrow(() -> new IllegalArgumentException(String.format("id为%d的口红不存在",lipstickId)));
     }
 
-    public void updateLipstick(Integer lipstickId, String newName, String newPrice, String newImageUrl){
-        Lipstick lipstick = getLipstick(lipstickId);
+    public void update(Integer lipstickId, String newName, String newPrice, String newImageUrl){
+        Lipstick lipstick = getById(lipstickId);
         if(newName != null) lipstick.setName(newName);
         if(newPrice != null) lipstick.setPrice(newPrice);
         if(newImageUrl != null) lipstick.setImageUrl(newImageUrl);

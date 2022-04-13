@@ -65,8 +65,8 @@ public class ArmaniFetcher implements Fetcher {
 
     private LipstickColor getLipstickColorInfo(Element lipstickColorDiv){
         String colorName = lipstickColorDiv.attr("title");
-        Elements backgroundColorElement = lipstickColorDiv.getElementsByTag("div");
-        String backgroundColor = backgroundColorElement.first().attr("style");
-        return new LipstickColor(colorName, backgroundColor);
+        Elements colorElement = lipstickColorDiv.getElementsByTag("div");
+        String color = colorElement.first().attr("style");
+        return new LipstickColor(colorName, color);
     }
 }
