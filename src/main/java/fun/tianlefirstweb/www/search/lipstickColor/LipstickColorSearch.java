@@ -37,15 +37,13 @@ public class LipstickColorSearch {
     public LipstickColorSearch(String id, String name, String hexColor) {
         this.id = id;
         this.name = name;
+        this.hexColor = hexColor;
 
-        int r = Integer.parseInt(hexColor.substring(1,3));
-        int g = Integer.parseInt(hexColor.substring(3,5));
-        int b = Integer.parseInt(hexColor.substring(5,7));
-
-        float[] hsb = new float[3];
-        Color.RGBtoHSB(r,g,b,hsb);
+        float[] hsb = ColorUtil.HEXtoHSB(hexColor);
         this.h = hsb[0];
         this.s = hsb[1];
         this.b = hsb[2];
     }
+
+
 }
