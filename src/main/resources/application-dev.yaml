@@ -19,9 +19,15 @@ spring:
       minimum-idle: 10
       read-only: false
   elasticsearch:
-    url : 47.106.137.238:9200
+    url : "47.106.137.238:9200"
 logging:
   level:
     root: info
     com:
       gargoylesoftware: off
+
+application:
+  jwt:
+    secretKey : "securesecuresecuresecuresecuresecuresecure"
+    authorizationHeader : "Authorization"
+    tokenPrefix : "Bearer "

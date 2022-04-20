@@ -1,11 +1,15 @@
 package fun.tianlefirstweb.www.search.lipstickColor;
 
 import java.awt.*;
+import java.util.Locale;
 
 public class ColorUtil {
 
     public static float[] HEXtoHSB(String hexColor){
+        //TODO : handle invalid hex
+
         if(hexColor.startsWith("#")) hexColor = hexColor.substring(1);
+        hexColor = hexColor.toLowerCase(Locale.ROOT);
         int r = Hex2Integer(hexColor.substring(0,2));
         int g = Hex2Integer(hexColor.substring(2,4));
         int b = Hex2Integer(hexColor.substring(4,6));

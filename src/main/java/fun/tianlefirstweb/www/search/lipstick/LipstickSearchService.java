@@ -56,7 +56,7 @@ public class LipstickSearchService {
             System.out.println(requestDTO.getTerm() + " : " + searchResponse.getHits().getTotalHits().value);
             return lipsticks;
         } catch (IOException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e.getMessage());
             //TODO: handle exception
         }
     }

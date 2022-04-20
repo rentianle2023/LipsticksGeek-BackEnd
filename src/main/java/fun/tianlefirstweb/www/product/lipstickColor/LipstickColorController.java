@@ -1,5 +1,6 @@
 package fun.tianlefirstweb.www.product.lipstickColor;
 
+import fun.tianlefirstweb.www.product.lipstick.Lipstick;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,15 +16,15 @@ public class LipstickColorController {
         this.lipstickColorService = lipstickColorService;
     }
 
-    @GetMapping("/{lipstickId}")
-    public ResponseEntity<List<LipstickColor>> getLipstickColors(@PathVariable Integer lipstickId){
-        return ResponseEntity.ok(lipstickColorService.getByLipstickId(lipstickId));
+    @GetMapping("/{colorId}/lipstick")
+    public ResponseEntity<Lipstick> getLipstickByColorId(@PathVariable Integer colorId){
+        return ResponseEntity.ok(lipstickColorService.getById(colorId).getLipstick());
     }
 
-    @PutMapping("/{lipstickColorId}")
-    public ResponseEntity<?> updateLipstickColor(@PathVariable Integer lipstickColorId,
-                                                 @RequestBody LipstickColor lipstickColor){
-        lipstickColorService.updateLipstickColor(lipstickColorId,lipstickColor.getName(),lipstickColor.getHexColor());
+    @PutMapping("/{colorId}")
+    public ResponseEntity<?> updateLipstickColor(@PathVariable Integer colorId,
+                                                 @RequestBody LipstickColor color){
+        lipstickColorService.updateLipstickColor(colorId,color.getName(),color.getHexColor());
         return ResponseEntity.ok().build();
     }
 }

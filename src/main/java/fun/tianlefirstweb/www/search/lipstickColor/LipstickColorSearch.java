@@ -7,8 +7,6 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import javax.persistence.Id;
 
-import java.awt.*;
-
 import static fun.tianlefirstweb.www.search.SearchIndices.LIPSTICK_COLOR;
 
 @Document(indexName = LIPSTICK_COLOR)
@@ -17,25 +15,29 @@ public class LipstickColorSearch {
 
     @Id
     @Field(type = FieldType.Keyword)
-    private String id;
+    private final String id;
 
     @Field(type = FieldType.Text)
-    private String name;
+    private final String brandName;
 
     @Field(type = FieldType.Text)
-    private String hexColor;
+    private final String name;
+
+    @Field(type = FieldType.Text)
+    private final String hexColor;
 
     @Field(type = FieldType.Float)
-    private Float h;
+    private final Float h;
 
     @Field(type = FieldType.Float)
-    private Float s;
+    private final Float s;
 
     @Field(type = FieldType.Float)
-    private Float b;
+    private final Float b;
 
-    public LipstickColorSearch(String id, String name, String hexColor) {
+    public LipstickColorSearch(String id, String brandName, String name, String hexColor) {
         this.id = id;
+        this.brandName = brandName;
         this.name = name;
         this.hexColor = hexColor;
 

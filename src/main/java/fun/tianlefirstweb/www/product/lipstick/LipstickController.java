@@ -1,5 +1,7 @@
 package fun.tianlefirstweb.www.product.lipstick;
 
+import fun.tianlefirstweb.www.product.lipstickColor.LipstickColor;
+import fun.tianlefirstweb.www.product.lipstickColor.LipstickColorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,15 +10,21 @@ import org.springframework.web.bind.annotation.*;
 public class LipstickController {
 
     private final LipstickService lipstickService;
+    private final LipstickColorService lipstickColorService;
 
-    public LipstickController(LipstickService lipstickService) {
+    public LipstickController(LipstickService lipstickService, LipstickColorService lipstickColorService) {
         this.lipstickService = lipstickService;
+        this.lipstickColorService = lipstickColorService;
     }
-
 
     @GetMapping("/{lipstickId}")
     public Lipstick getLipstick(@PathVariable Integer lipstickId){
         return lipstickService.getById(lipstickId);
+    }
+
+    @GetMapping()
+    public ResponseEntity<Lipstick> getLipstickByColor(@RequestParam Integer color){
+        return ResponseEntity.ok(lipstickColorService.getById(color).getLipstick());
     }
 
     @PutMapping("/{lipstickId}")

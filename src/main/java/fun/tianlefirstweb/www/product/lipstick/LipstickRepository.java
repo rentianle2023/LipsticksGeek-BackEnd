@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface LipstickRepository extends CrudRepository<Lipstick,Integer> {
 
     Optional<List<Lipstick>> findLipsticksByBrandId(Integer brandId);
+
 }

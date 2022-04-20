@@ -39,6 +39,7 @@ public class SearchUtil {
     private static QueryBuilder getQueryBuilder(String hexColor){
         //TODO: check valid request
         float[] hsb = ColorUtil.HEXtoHSB(hexColor);
+        System.out.println(hsb[0] + " " + hsb[1] + " " + hsb[2]);
         return QueryBuilders.boolQuery()
                 .must(QueryBuilders.rangeQuery("h").gte(hsb[0] - 0.05).lte(hsb[0] + 0.05))
                 .must(QueryBuilders.rangeQuery("s").gte(hsb[1] - 0.05).lte(hsb[1] + 0.05))

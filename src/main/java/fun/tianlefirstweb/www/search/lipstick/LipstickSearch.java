@@ -15,9 +15,12 @@ public class LipstickSearch {
 
     @Id
     @Field(type = FieldType.Keyword)
-    private String id;
+    private final String id;
 
     @Field(type = FieldType.Text)
-    private String name;
+    private final String brandName;
+
+    @Field(type = FieldType.Text)
+    private final String name;
 
 }
