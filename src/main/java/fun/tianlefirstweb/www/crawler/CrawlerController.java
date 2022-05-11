@@ -19,8 +19,8 @@ public class CrawlerController {
     }
 
     @PostMapping("/{brandName}")
-    public ResponseEntity<?> fetchByBrandName(@PathVariable String brandName){
-        crawlerService.fetchAndSave(brandName);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Integer> fetchAndUpdate(@PathVariable String brandName){
+        Integer newColorsCount = crawlerService.fetchAndUpdate(brandName);
+        return ResponseEntity.ok(newColorsCount);
     }
 }

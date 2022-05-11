@@ -9,4 +9,6 @@ public class LipstickApplication {
     public static void main(String[] args) {
         SpringApplication.run(LipstickApplication.class, args);
     }
+
+
 }

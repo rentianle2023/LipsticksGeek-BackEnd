@@ -36,6 +36,11 @@ public class LipstickColorSearchService {
         lipstickColorSearchRepository.save(lipstickColorSearch);
     }
 
+    public void saveAll(List<LipstickColorSearch> colors){
+        lipstickColorSearchRepository.saveAll(colors);
+    }
+
+
     public List<LipstickColorSearch> search(SearchRequestDTO requestDTO){
         return getHits(SearchUtil.buildSearchRequest(LIPSTICK_COLOR, requestDTO));
     }
@@ -60,5 +65,9 @@ public class LipstickColorSearchService {
             throw new RuntimeException();
             //TODO: handle exception
         }
+    }
+
+    public void deleteAll() {
+        lipstickColorSearchRepository.deleteAll();
     }
 }

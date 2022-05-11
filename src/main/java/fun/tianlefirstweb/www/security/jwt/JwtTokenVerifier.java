@@ -3,9 +3,9 @@ package fun.tianlefirstweb.www.security.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 import org.elasticsearch.common.Strings;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,6 +22,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Verify JWT token
+ */
 public class JwtTokenVerifier extends OncePerRequestFilter {
 
     private final JwtConfig jwtConfig;
@@ -46,14 +49,12 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
         try {
             String token = authorizationHeader.replace(jwtConfig.getTokenPrefix(), "");
-            Jws<Claims> claimsJws = Jwts.parserBuilder()
-                    .setSigningKey(secretKey)
-                    .build()
-                    .parseClaimsJws(token);
+            Jws<Claims> claimsJws = JwtUtil.parse(token,secretKey);
 
             Claims body = claimsJws.getBody();
             String username = body.getSubject();
-            var authorities = (List<Map<String,String>>) body.get("authorities");
+            List<Map<String,String>> authorities = (List<Map<String,String>>) body.get("authorities");
+            //TODO: check token excess time
             List<SimpleGrantedAuthority> simpleGrantedAuthorities = authorities
                     .stream()
                     .map(a -> new SimpleGrantedAuthority(a.get("authority")))
@@ -62,11 +63,12 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                     username,
                     null,
-                    simpleGrantedAuthorities);
+                    simpleGrantedAuthorities
+            );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (JwtException e){
-            throw new IllegalStateException("token不合法");
+            throw new AuthenticationServiceException("invalid JWT token");
         }
 
         filterChain.doFilter(request,response);

@@ -7,13 +7,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/login")
 public class LoginController {
 
-    @GetMapping("/github/callback")
-    public String helloGithubOauth2(@RequestParam String code){
-        return code;
-    }
-
-    @GetMapping("/github/redirect")
-    public String helloGithubOauth2ridirect(@RequestParam String code){
-        return "redirect";
+    @PostMapping
+    public ResponseEntity<String> login(){
+        return ResponseEntity.ok("登录成功");
     }
 }

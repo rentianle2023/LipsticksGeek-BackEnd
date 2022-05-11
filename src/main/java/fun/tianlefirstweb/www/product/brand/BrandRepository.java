@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface BrandRepository extends CrudRepository<Brand,Integer> {
 
-    public boolean existsBrandByName(String name);
+    boolean existsBrandByName(String name);
 
-    public Optional<Brand> findBrandByName(String name);
+    Optional<Brand> findBrandByName(String name);
 
-    public List<Brand> findAll();
+    List<Brand> findAll();
 }

@@ -22,7 +22,7 @@ public class SearchUtil {
     }
 
     private static QueryBuilder getQueryBuilder(SearchRequestDTO requestDTO){
-        //TODO: check valid request
+
         if(requestDTO.getFields().size() > 1){
             MultiMatchQueryBuilder queryBuilder = QueryBuilders.multiMatchQuery(requestDTO.getTerm())
                     .operator(Operator.AND)
@@ -32,12 +32,13 @@ public class SearchUtil {
             return queryBuilder;
         }
 
-        return QueryBuilders.matchBoolPrefixQuery(requestDTO.getFields().get(0),requestDTO.getTerm())
+        return QueryBuilders
+                .matchBoolPrefixQuery(requestDTO.getFields().get(0),requestDTO.getTerm())
                 .operator(Operator.AND);
     }
 
     private static QueryBuilder getQueryBuilder(String hexColor){
-        //TODO: check valid request
+
         float[] hsb = ColorUtil.HEXtoHSB(hexColor);
         System.out.println(hsb[0] + " " + hsb[1] + " " + hsb[2]);
         return QueryBuilders.boolQuery()

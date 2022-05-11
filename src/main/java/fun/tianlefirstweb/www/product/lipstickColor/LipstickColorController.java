@@ -4,8 +4,6 @@ import fun.tianlefirstweb.www.product.lipstick.Lipstick;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("colors")
 public class LipstickColorController {
@@ -18,7 +16,7 @@ public class LipstickColorController {
 
     @GetMapping("/{colorId}/lipstick")
     public ResponseEntity<Lipstick> getLipstickByColorId(@PathVariable Integer colorId){
-        return ResponseEntity.ok(lipstickColorService.getById(colorId).getLipstick());
+        return ResponseEntity.ok(lipstickColorService.findById(colorId).getLipstick());
     }
 
     @PutMapping("/{colorId}")

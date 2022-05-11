@@ -1,9 +1,9 @@
-package fun.tianlefirstweb.www.security.jwt;
+package fun.tianlefirstweb.www.security;
 
 import lombok.Data;
 
 @Data
-public class UsernamePasswordAuthRequest {
+public class LoginRequestDTO {
 
     private String username;
     private String password;

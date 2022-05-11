@@ -5,11 +5,13 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import fun.tianlefirstweb.www.product.brand.Brand;
 import fun.tianlefirstweb.www.product.lipstickColor.LipstickColor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static javax.persistence.CascadeType.*;
+import static javax.persistence.FetchType.*;
 
 @Entity
 @Data
@@ -21,8 +23,9 @@ public class Lipstick {
 
     @OneToMany(
             mappedBy = "lipstick",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            cascade = ALL,
+            orphanRemoval = true,
+            fetch = EAGER
     )
     @JsonManagedReference
     private List<LipstickColor> colors;
@@ -31,7 +34,7 @@ public class Lipstick {
     private String price;
     private String imageUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "brand_id")
     @JsonBackReference
     private Brand brand;
@@ -46,8 +49,11 @@ public class Lipstick {
         this.imageUrl = imageUrl;
     }
 
-    public void addColor(LipstickColor color){
-        colors.add(color);
-        color.setLipstick(this);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Lipstick lipstick = (Lipstick) o;
+        return this.name.equals(lipstick.getName());
     }
 }

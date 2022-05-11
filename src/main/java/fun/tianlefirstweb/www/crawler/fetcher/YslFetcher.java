@@ -1,9 +1,8 @@
 package fun.tianlefirstweb.www.crawler.fetcher;
 
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlDivision;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import fun.tianlefirstweb.www.crawler.BrandInfo;
+import fun.tianlefirstweb.www.exception.UnableToConnectException;
+import fun.tianlefirstweb.www.product.brand.BrandRepository;
 import fun.tianlefirstweb.www.product.lipstick.Lipstick;
 import fun.tianlefirstweb.www.product.lipstickColor.LipstickColor;
 import org.jsoup.Jsoup;
@@ -18,26 +17,31 @@ import java.util.List;
 import java.util.Objects;
 
 @Component
-public class YslFetcher implements Fetcher {
+public class YslFetcher extends LipstickFetcher {
+
+    protected YslFetcher(BrandRepository brandRepository) {
+        super(brandRepository);
+    }
 
     public Document getDocument() {
         try {
             return Jsoup.connect(BrandInfo.YSL.getFetchUrl()).get();
         } catch (IOException e) {
-            throw new RuntimeException("获取网页失败");
+            throw new UnableToConnectException(String.format("Failed to connect %s's website",getBrandName()));
         }
     }
 
     @Override
-    public List<Lipstick> fetch() {
+    public List<Lipstick> fetchLipsticks() {
         List<Lipstick> lipsticks = new ArrayList<>();
         Document document = getDocument();
         Elements products = document.getElementsByClass("thumbnail");
         for (Element element : products) {
             Lipstick lipstick = getLipstickInfo(element);
+            lipstick.setColors(new ArrayList<>());
             Elements colorElements = element.getElementsByTag("i");
             for (Element color : colorElements) {
-                lipstick.addColor(getLipstickColorInfo(color));
+                lipstick.getColors().add(getLipstickColorInfo(color));
             }
             lipsticks.add(lipstick);
         }

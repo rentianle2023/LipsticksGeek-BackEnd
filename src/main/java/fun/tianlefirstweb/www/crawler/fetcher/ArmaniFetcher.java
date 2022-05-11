@@ -4,6 +4,8 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import fun.tianlefirstweb.www.crawler.BrandInfo;
+import fun.tianlefirstweb.www.exception.UnableToConnectException;
+import fun.tianlefirstweb.www.product.brand.BrandRepository;
 import fun.tianlefirstweb.www.product.lipstick.Lipstick;
 import fun.tianlefirstweb.www.product.lipstickColor.LipstickColor;
 import org.jsoup.Jsoup;
@@ -17,7 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ArmaniFetcher implements Fetcher {
+public class ArmaniFetcher extends LipstickFetcher {
+
+    protected ArmaniFetcher(BrandRepository brandRepository) {
+        super(brandRepository);
+    }
 
     public Document getDocument() {
         WebClient webClient = new WebClient();
@@ -30,21 +36,22 @@ public class ArmaniFetcher implements Fetcher {
             List<HtmlDivision> list = page.getByXPath("//div[contains(@class, 'product-main')]");
             div = list.get(0);
         } catch (IOException e) {
-            //TODO: handle exception
+            throw new UnableToConnectException(String.format("Failed to connect %s's website",getBrandName()));
         }
         return Jsoup.parse(div.asXml());
     }
 
     @Override
-    public List<Lipstick> fetch() {
+    public List<Lipstick> fetchLipsticks() {
         List<Lipstick> lipsticks = new ArrayList<>();
         Document document = getDocument();
         Elements products = document.getElementsByClass("product-content");
         for (Element element : products) {
             Lipstick lipstick = getLipstickInfo(element);
+            lipstick.setColors(new ArrayList<>());
             Elements colorElements = element.getElementsByTag("li");
             for (Element color : colorElements) {
-                lipstick.addColor(getLipstickColorInfo(color));
+                lipstick.getColors().add(getLipstickColorInfo(color));
             }
             lipsticks.add(lipstick);
         }

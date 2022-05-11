@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @NoArgsConstructor
 @Data
@@ -21,7 +23,11 @@ public class Brand {
     private String websiteUrl;
     private String logoImage;
 
-    @OneToMany(mappedBy = "brand")
+    @OneToMany(
+            mappedBy = "brand",
+            orphanRemoval = true,
+            fetch = LAZY
+    )
     @JsonBackReference
     private List<Lipstick> lipsticks;
 }

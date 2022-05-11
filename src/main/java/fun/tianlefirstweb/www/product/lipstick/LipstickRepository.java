@@ -7,6 +7,9 @@ import java.util.Optional;
 
 public interface LipstickRepository extends CrudRepository<Lipstick,Integer> {
 
-    Optional<List<Lipstick>> findLipsticksByBrandId(Integer brandId);
+    List<Lipstick> findLipsticksByBrandId(Integer brandId);
 
+    Boolean existsByName(String lipstickName);
+
+    Optional<Lipstick> findByName(String lipstickName);
 }

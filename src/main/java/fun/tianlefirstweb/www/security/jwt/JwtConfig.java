@@ -16,6 +16,7 @@ public class JwtConfig {
     private String secretKey;
     private String authorizationHeader;
     private String tokenPrefix;
+    private Integer tokenExpirationAfterDays;
 
     @Bean
     public SecretKey secretKey(){

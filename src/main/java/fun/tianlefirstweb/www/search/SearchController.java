@@ -1,15 +1,15 @@
 package fun.tianlefirstweb.www.search;
 
 import fun.tianlefirstweb.www.product.lipstick.LipstickRepository;
+import fun.tianlefirstweb.www.product.lipstick.LipstickService;
 import fun.tianlefirstweb.www.search.lipstick.LipstickSearch;
-import fun.tianlefirstweb.www.search.lipstick.LipstickSearchRepository;
 import fun.tianlefirstweb.www.search.lipstick.LipstickSearchService;
 import fun.tianlefirstweb.www.search.lipstickColor.LipstickColorSearch;
-import fun.tianlefirstweb.www.search.lipstickColor.LipstickColorSearchRepository;
 import fun.tianlefirstweb.www.search.lipstickColor.LipstickColorSearchService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,20 +21,14 @@ public class SearchController {
 
     private final LipstickSearchService lipstickSearchService;
     private final LipstickColorSearchService lipstickColorSearchService;
-    private final LipstickRepository lipstickRepository;
-    private final LipstickSearchRepository lipstickSearchRepository;
-    private final LipstickColorSearchRepository lipstickColorSearchRepository;
+    private final LipstickService lipstickService;
 
     public SearchController(LipstickSearchService lipstickSearchService,
                             LipstickColorSearchService lipstickColorSearchService,
-                            LipstickRepository lipstickRepository,
-                            LipstickSearchRepository lipstickSearchRepository,
-                            LipstickColorSearchRepository lipstickColorSearchRepository) {
+                            LipstickService lipstickService) {
         this.lipstickSearchService = lipstickSearchService;
         this.lipstickColorSearchService = lipstickColorSearchService;
-        this.lipstickRepository = lipstickRepository;
-        this.lipstickSearchRepository = lipstickSearchRepository;
-        this.lipstickColorSearchRepository = lipstickColorSearchRepository;
+        this.lipstickService = lipstickService;
     }
 
     @PostMapping
@@ -43,13 +37,17 @@ public class SearchController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<LipstickSearch> searchLipstick(@PathVariable String id) {
         return ResponseEntity.ok(lipstickSearchService.searchLipstick(id));
     }
 
+    /**
+     * Full-text search with fields & term
+     * @return Lipsticks grouped by brand name
+     */
     @PostMapping("/all")
-    public ResponseEntity<Map<String, List<SearchResponseDTO>>> searchLipsticks(@RequestBody SearchRequestDTO requestDTO) {
+    public ResponseEntity<Map<String, List<SearchResponseDTO>>> searchLipsticks(@Valid @RequestBody SearchRequestDTO requestDTO) {
         List<LipstickSearch> lipsticks = lipstickSearchService.searchLipsticks(requestDTO);
         List<LipstickColorSearch> colors = lipstickColorSearchService.search(requestDTO);
         Map<String, List<SearchResponseDTO>> map = new HashMap<>();
@@ -64,8 +62,12 @@ public class SearchController {
         return ResponseEntity.ok(map);
     }
 
+    /**
+     * Full-text search by color
+     * @return Lipsticks with similar color
+     */
     @PostMapping("/color")
-    private ResponseEntity<Map<String, List<SearchResponseDTO>>> search(@RequestBody ColorSearchRequestDTO colorSearchRequestDTO) {
+    private ResponseEntity<Map<String, List<SearchResponseDTO>>> search(@Valid @RequestBody ColorSearchRequestDTO colorSearchRequestDTO) {
         Map<String, List<SearchResponseDTO>> map = new HashMap<>();
         lipstickColorSearchService.search(colorSearchRequestDTO.getHexColor())
                 .forEach(color -> {
@@ -77,12 +79,12 @@ public class SearchController {
 
     @PostMapping("/refresh")
     public ResponseEntity<?> refresh() {
-        lipstickSearchRepository.deleteAll();
-        lipstickColorSearchRepository.deleteAll();
+        lipstickSearchService.deleteAll();
+        lipstickColorSearchService.deleteAll();
 
         List<LipstickSearch> lipsticks = new ArrayList<>();
         List<LipstickColorSearch> colors = new ArrayList<>();
-        lipstickRepository.findAll()
+        lipstickService.findAll()
                 .forEach(lipstick -> {
                     String brandName = lipstick.getBrand().getName();
                     lipsticks.add(
@@ -104,8 +106,8 @@ public class SearchController {
                                     )
                             );
                 });
-        lipstickSearchRepository.saveAll(lipsticks);
-        lipstickColorSearchRepository.saveAll(colors);
+        lipstickSearchService.saveAll(lipsticks);
+        lipstickColorSearchService.saveAll(colors);
         return ResponseEntity.ok().build();
     }
 }

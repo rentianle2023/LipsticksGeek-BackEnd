@@ -1,7 +1,7 @@
 package fun.tianlefirstweb.www.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.Jwts;
+import fun.tianlefirstweb.www.security.LoginRequestDTO;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,9 +14,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
-import java.time.LocalDate;
 
+/**
+ * Called before reaching endpoint /login with POST method
+ * Sign JWT token to user with valid username & password
+ */
 public class JwtUsernamePasswordAuthFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
@@ -34,30 +36,32 @@ public class JwtUsernamePasswordAuthFilter extends UsernamePasswordAuthenticatio
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
-        try{
-            UsernamePasswordAuthRequest authRequest = new ObjectMapper()
-                    .readValue(request.getInputStream(), UsernamePasswordAuthRequest.class);
+        try {
+            LoginRequestDTO loginRequest = new ObjectMapper()
+                    .readValue(request.getInputStream(), LoginRequestDTO.class);
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    authRequest.getUsername(),
-                    authRequest.getPassword()
+                    loginRequest.getUsername(),
+                    loginRequest.getPassword()
             );
             return authenticationManager.authenticate(authentication);
-        }catch(IOException e){
-            throw new RuntimeException(e);
+        } catch (IOException e){
+            throw new IllegalArgumentException("invalid form of username and password");
         }
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
-        String token = Jwts.builder()
-                .setSubject(authResult.getName())
-                .claim("authorities", authResult.getAuthorities())
-                .setExpiration(Date.valueOf(LocalDate.now().plusWeeks(2)))
-                .signWith(secretKey)
-                .compact();
+        String token = JwtUtil.sign(
+                authResult.getName(),
+                authResult.getAuthorities(),
+                jwtConfig.getTokenExpirationAfterDays(),
+                secretKey
+        );
 
         response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
+
+        chain.doFilter(request, response);
     }
 }

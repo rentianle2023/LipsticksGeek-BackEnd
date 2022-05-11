@@ -9,16 +9,16 @@ import java.util.Map;
 @Component
 public class FetcherFactory {
 
-    private final Map<String, Fetcher> fetcherMap;
+    private final Map<String, LipstickFetcher> fetcherMap;
 
-    public FetcherFactory(List<Fetcher> fetcherList) {
+    public FetcherFactory(List<LipstickFetcher> fetcherList) {
         fetcherMap = new HashMap<>();
         for(var fetcher : fetcherList){
             fetcherMap.put(fetcher.getBrandName(),fetcher);
         }
     }
 
-    public Fetcher getFetcher(String brandName){
+    public LipstickFetcher getFetcher(String brandName){
         return fetcherMap.get(brandName);
     }
 }
