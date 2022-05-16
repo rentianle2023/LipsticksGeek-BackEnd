@@ -1,0 +1,55 @@
+spring:
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  #    open-in-view: false
+  datasource:
+    username: root
+    password: franK1100
+    url: jdbc:mysql://47.106.137.238:3306/test?serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-timeout: 60000
+      validation-timeout: 3000
+      login-timeout: 5
+      max-lifetime: 60000
+      maximum-pool-size: 10
+      minimum-idle: 10
+      read-only: false
+logging:
+  level:
+    root: info
+    com:
+      gargoylesoftware: off
+server:
+  error:
+    include-message: always
+
+#custom configurations
+application:
+
+  jwt:
+    secretKey : "securesecuresecuresecuresecuresecuresecure"
+    authorizationHeader : "Authorization"
+    tokenPrefix : "Bearer "
+    tokenExpirationAfterDays : 5
+  elasticsearch:
+    url : "47.106.137.238:9200"
+  user:
+    default:
+      avatar : "https://cdn.acwing.com/media/user/profile/photo/192283_md_bc37717ec6.jpg"
+  oauth2:
+    client:
+      registrations:
+        github :
+          clientId: "f54e93ac72515410a3b0"
+          clientSecret: "dfc09cf8c72608a55e77753103207df8023c361c"
+      jsonFields:
+        github :
+          username : "login"
+          nickname : "name"
+          avatar : "avatar_url"
+          home : "html_url"
+
