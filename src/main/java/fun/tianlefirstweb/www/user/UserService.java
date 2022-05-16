@@ -1,10 +1,7 @@
 package fun.tianlefirstweb.www.user;
 
-import fun.tianlefirstweb.www.exception.EntityAlreadyExistException;
-import fun.tianlefirstweb.www.exception.EntityNotExistException;
 import fun.tianlefirstweb.www.exception.UserAlreadyExistException;
-import fun.tianlefirstweb.www.product.lipstickColor.LipstickColor;
-import fun.tianlefirstweb.www.user.enums.AuthenticationProvider;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.stereotype.Service;
 
@@ -12,20 +9,18 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final ApplicationUserRepository userRepository;
-    private final OAuthUserRepository oauthUserRepository;
 
-    public UserService(ApplicationUserRepository userRepository, OAuthUserRepository oauthUserRepository) {
+    public UserService(ApplicationUserRepository userRepository) {
         this.userRepository = userRepository;
-        this.oauthUserRepository = oauthUserRepository;
     }
 
-    public void save(ApplicationUser user) {
+    public ApplicationUser save(ApplicationUser user) {
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new UserAlreadyExistException("注册用户名已存在");
         } else if (userRepository.existsByEmail(user.getEmail())) {
             throw new UserAlreadyExistException("注册邮箱已存在");
         }
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     public ApplicationUser findByUsername(String username) {
@@ -38,10 +33,7 @@ public class UserService {
                 .orElseThrow(() -> new AuthenticationServiceException("username doesn't exist"));
     }
 
-    public ApplicationUser getOauthUser(String id, AuthenticationProvider provider) {
-        OAuthUser oAuthUser = oauthUserRepository.getByOauthIdAndAuthenticationProvider(id, provider)
-                .orElseThrow(() -> new AuthenticationServiceException(""));
-
-        return oAuthUser.getUser();
+    public boolean existsByUsername(String username){
+        return userRepository.existsByUsername(username);
     }
 }

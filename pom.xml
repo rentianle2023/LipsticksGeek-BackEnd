@@ -15,6 +15,7 @@
     <description>lipstick project</description>
     <properties>
         <java.version>11</java.version>
+        <spring.cloud-version>2021.0.2</spring.cloud-version>
     </properties>
     <dependencies>
         <dependency>
@@ -105,6 +106,11 @@
             <groupId> org.springframework.boot </groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional> true </optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
 
     </dependencies>

@@ -2,21 +2,22 @@ package fun.tianlefirstweb.www.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import fun.tianlefirstweb.www.favorite.Favorite;
-import fun.tianlefirstweb.www.product.lipstickColor.LipstickColor;
 import fun.tianlefirstweb.www.user.enums.Gender;
+import fun.tianlefirstweb.www.user.oauth.OauthUser;
 import fun.tianlefirstweb.www.user.role.ApplicationRole;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Set;
 
 import static javax.persistence.EnumType.STRING;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "user")
 public class ApplicationUser {
 
@@ -31,6 +32,7 @@ public class ApplicationUser {
     private String phoneNumber;
     private String email;
     private String avatar;
+    private String nickname;
 
     private Date birthday;
 
@@ -47,4 +49,16 @@ public class ApplicationUser {
     @OneToMany(mappedBy = "user")
     @JsonBackReference
     private List<Favorite> favoriteColors;
+
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference
+    private List<OauthUser> oAuthUsers;
+
+    public ApplicationUser(String username, String password, String avatar, String nickname, List<ApplicationRole> roles) {
+        this.username = username;
+        this.password = password;
+        this.avatar = avatar;
+        this.nickname = nickname;
+        this.roles = roles;
+    }
 }

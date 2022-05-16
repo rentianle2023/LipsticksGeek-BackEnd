@@ -39,4 +39,16 @@ application:
   user:
     default:
       avatar : "https://cdn.acwing.com/media/user/profile/photo/192283_md_bc37717ec6.jpg"
+  oauth2:
+    client:
+      registrations:
+        github :
+          clientId: "18f418c2e09be764aa9e"
+          clientSecret: "f1aad0181aa9fcc01156e6df69d901109ce5c650"
+      jsonFields:
+        github :
+          username : "login"
+          nickname : "name"
+          avatar : "avatar_url"
+          home : "html_url"
 
