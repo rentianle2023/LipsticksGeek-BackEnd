@@ -124,6 +124,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <finalName>springboot-lipstick</finalName>
     </build>
 
 </project>
