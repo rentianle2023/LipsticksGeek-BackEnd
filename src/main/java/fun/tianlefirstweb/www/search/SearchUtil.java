@@ -7,10 +7,13 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 public class SearchUtil {
 
+    public static final double HUE_RANGE = 0.02;
+    public static final double SATURATION_RANGE = 0.05;
+    public static final double BRIGHTNESS_RANGE = 0.05;
+
     public static SearchRequest buildSearchRequest(String indexName, SearchRequestDTO requestDTO){
         SearchRequest request = new SearchRequest(indexName);
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder().postFilter(getQueryBuilder(requestDTO));
-        //searchSourceBuilder.size(100);
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder().query(getQueryBuilder(requestDTO));
         return request.source(searchSourceBuilder);
     }
 
@@ -18,6 +21,7 @@ public class SearchUtil {
         SearchRequest request = new SearchRequest(indexName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
                 .postFilter(getQueryBuilder(hexColor));
+        searchSourceBuilder.size(100);
         return request.source(searchSourceBuilder);
     }
 
@@ -40,10 +44,24 @@ public class SearchUtil {
     private static QueryBuilder getQueryBuilder(String hexColor){
 
         float[] hsb = ColorUtil.HEXtoHSB(hexColor);
-        System.out.println(hsb[0] + " " + hsb[1] + " " + hsb[2]);
-        return QueryBuilders.boolQuery()
-                .must(QueryBuilders.rangeQuery("h").gte(hsb[0] - 0.05).lte(hsb[0] + 0.05))
-                .must(QueryBuilders.rangeQuery("s").gte(hsb[1] - 0.05).lte(hsb[1] + 0.05))
-                .must(QueryBuilders.rangeQuery("b").gte(hsb[2] - 0.05).lte(hsb[2] + 0.05));
+        float hue = hsb[0];
+
+        BoolQueryBuilder builder = QueryBuilders.boolQuery()
+                .must(QueryBuilders.rangeQuery("s").gte(hsb[1] - SATURATION_RANGE).lte(hsb[1] + SATURATION_RANGE))
+                .must(QueryBuilders.rangeQuery("b").gte(hsb[2] - BRIGHTNESS_RANGE).lte(hsb[2] + BRIGHTNESS_RANGE));
+
+        if(hue < HUE_RANGE){
+            builder.filter(QueryBuilders.boolQuery()
+                    .should(QueryBuilders.rangeQuery("h").gte((1 - HUE_RANGE) + hue))
+                    .should(QueryBuilders.rangeQuery("h").lte(hue + HUE_RANGE)));
+        }else if(hue > 1 - HUE_RANGE){
+            builder.filter(QueryBuilders.boolQuery()
+                    .should(QueryBuilders.rangeQuery("h").gte(hue - HUE_RANGE))
+                    .should(QueryBuilders.rangeQuery("h").lte(hue - (1 - HUE_RANGE))));
+        }else{
+            builder.must(QueryBuilders.rangeQuery("h").gte(hsb[0] - HUE_RANGE).lte(hsb[0] + HUE_RANGE));
+        }
+
+        return builder;
     }
 }

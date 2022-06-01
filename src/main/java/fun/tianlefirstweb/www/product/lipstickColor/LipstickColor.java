@@ -30,6 +30,10 @@ public class LipstickColor {
     @JsonBackReference
     private Lipstick lipstick;
 
+//    private Integer hue;
+//    private Integer saturation;
+//    private Integer brightness;
+
     @OneToMany(mappedBy = "color")
     @JsonBackReference
     private Set<Favorite> favoriteUsers;

@@ -37,9 +37,11 @@ public class CrawlerService {
                 count.addAndGet(lipstick.getColors().size());
             }
             else{
+                Lipstick persistLipstick = lipstickService.findByName(lipstick.getName());
                 List<LipstickColor> colors = lipstickService.findByName(lipstick.getName()).getColors();
                 lipstick.getColors().forEach(color -> {
                     if(!colors.contains(color)) {
+                        color.setLipstick(persistLipstick);
                         lipstickColorService.save(color);
                         count.incrementAndGet();
                     }

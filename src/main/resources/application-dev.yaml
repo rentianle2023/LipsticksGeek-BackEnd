@@ -51,4 +51,6 @@ application:
           nickname : "name"
           avatar : "avatar_url"
           home : "html_url"
+  selenium:
+    enable: "false"
 

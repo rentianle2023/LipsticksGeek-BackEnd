@@ -15,16 +15,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static fun.tianlefirstweb.www.crawler.BrandInfo.MAC;
+
 @Component
 public class MacFetcher extends LipstickFetcher {
 
-    protected MacFetcher(BrandRepository brandRepository) {
-        super(brandRepository);
-    }
-
     public Document getDocument() {
         try {
-            return Jsoup.connect(BrandInfo.MAC.getFetchUrl()).get();
+            return Jsoup.connect(MAC.getFetchUrl()).get();
         } catch (IOException e) {
             throw new UnableToConnectException(String.format("Failed to connect %s's website",getBrandName()));
         }
@@ -49,13 +47,13 @@ public class MacFetcher extends LipstickFetcher {
 
     @Override
     public String getBrandName() {
-        return BrandInfo.MAC.name();
+        return MAC.name();
     }
 
     private Lipstick getLipstickInfo(Element lipstickDiv){
         String lipstickName = lipstickDiv.getElementsByTag("h3").first().text();
         String price = lipstickDiv.getElementsByClass("product-price").text();
-        String imageUrl = BrandInfo.MAC.getHomeUrl() + lipstickDiv.getElementsByClass("product-brief__image-img").first().attr("data-src");
+        String imageUrl = MAC.getHomeUrl() + lipstickDiv.getElementsByClass("product-brief__image-img").first().attr("data-src");
         return new Lipstick(lipstickName,price,imageUrl);
     }
 

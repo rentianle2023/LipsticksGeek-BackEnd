@@ -19,10 +19,6 @@ import java.util.Objects;
 @Component
 public class YslFetcher extends LipstickFetcher {
 
-    protected YslFetcher(BrandRepository brandRepository) {
-        super(brandRepository);
-    }
-
     public Document getDocument() {
         try {
             return Jsoup.connect(BrandInfo.YSL.getFetchUrl()).get();

@@ -18,12 +18,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static fun.tianlefirstweb.www.crawler.BrandInfo.ARMANI;
+
 @Component
 public class ArmaniFetcher extends LipstickFetcher {
-
-    protected ArmaniFetcher(BrandRepository brandRepository) {
-        super(brandRepository);
-    }
 
     public Document getDocument() {
         WebClient webClient = new WebClient();
@@ -31,7 +29,7 @@ public class ArmaniFetcher extends LipstickFetcher {
 
         HtmlDivision div = null;
         try {
-            HtmlPage page = webClient.getPage("https://www.giorgioarmanibeauty.cn/LIPS");
+            HtmlPage page = webClient.getPage(ARMANI.getFetchUrl());
             webClient.waitForBackgroundJavaScript(5000);
             List<HtmlDivision> list = page.getByXPath("//div[contains(@class, 'product-main')]");
             div = list.get(0);
@@ -60,7 +58,7 @@ public class ArmaniFetcher extends LipstickFetcher {
 
     @Override
     public String getBrandName() {
-        return BrandInfo.ARMANI.name();
+        return ARMANI.name();
     }
 
     private Lipstick getLipstickInfo(Element lipstickDiv){
