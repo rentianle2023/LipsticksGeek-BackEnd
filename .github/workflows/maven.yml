@@ -3,6 +3,9 @@
 
 name: Springboot CI/CD
 
+env:
+  ENCRYPTOR_PASSWORD : ${{ secrets.DOCKER_USERNAME }}
+
 on:
   push:
     branches: [ main ]
