@@ -16,11 +16,13 @@
 - [ ] 使用缓存加快访问速度（Redis）
 
 ## 技术栈
-SpringBoot全家桶：包含SpringDataJpa,SpringDataElasticsearch,SpringSecurity,SpringWebsocket等
+后端Spring全家桶：包含SpringDataJpa,SpringDataElasticsearch,SpringSecurity,SpringWebsocket等
 
-数据库方面：搜索引擎ElasticSearch，关系型数据库Mysql，缓存Redis（即将更新）
+数据库方面：搜索引擎ElasticSearch，关系型数据库Mysql，缓存Redis（即将上线）
 
 前端：ReactJS + TailwindCSS + 各种React Component库
+
+运维：前端使用Nginx部署，后端使用Github workflows + Docker部署，服务器和域名均为阿里云最便宜的一档
 
 ## 关于我
 
