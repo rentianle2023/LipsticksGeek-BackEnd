@@ -20,7 +20,7 @@ public class Favorite {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+    @JsonBackReference("favorite-users")
     private ApplicationUser user;
 
     @ManyToOne(fetch = FetchType.EAGER)

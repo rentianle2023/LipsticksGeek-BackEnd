@@ -1,6 +1,9 @@
 package fun.tianlefirstweb.www.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import fun.tianlefirstweb.www.comment.Comment;
+import fun.tianlefirstweb.www.comment.Reply;
 import fun.tianlefirstweb.www.favorite.Favorite;
 import fun.tianlefirstweb.www.user.enums.Gender;
 import fun.tianlefirstweb.www.user.oauth.OauthUser;
@@ -53,6 +56,12 @@ public class ApplicationUser {
     @OneToMany(mappedBy = "user")
     @JsonBackReference
     private List<OauthUser> oAuthUsers;
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
+    private List<Reply> replies;
 
     public ApplicationUser(String username, String password, String avatar, String nickname, List<ApplicationRole> roles) {
         this.username = username;

@@ -2,6 +2,9 @@ package fun.tianlefirstweb.www.product.brand;
 
 import fun.tianlefirstweb.www.exception.EntityAlreadyExistException;
 import fun.tianlefirstweb.www.exception.EntityNotExistException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +25,13 @@ public class BrandService {
         brandRepository.save(brand);
     }
 
-    public List<Brand> getBrands(){
+    public List<Brand> findBrands(){
         return brandRepository.findAll();
+    }
+
+    public Page<Brand> findBrandsWithPagination(int page, int size){
+        return brandRepository.findAll(
+                PageRequest.of(page, size)
+        );
     }
 }

@@ -25,18 +25,18 @@ public class LipstickColor {
     private String name;
     private String hexColor;
 
+    @JsonBackReference("lipstick-colors")
     @ManyToOne
     @JoinColumn(name = "lipstick_id")
-    @JsonBackReference
     private Lipstick lipstick;
 
 //    private Integer hue;
 //    private Integer saturation;
 //    private Integer brightness;
 
+    @JsonBackReference("favorite-users")
     @OneToMany(mappedBy = "color")
-    @JsonBackReference
-    private Set<Favorite> favoriteUsers;
+    private List<Favorite> favoriteUsers;
 
     public LipstickColor(String name, String hexColor) {
         this.name = name;

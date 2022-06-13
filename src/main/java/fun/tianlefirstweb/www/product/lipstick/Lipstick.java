@@ -1,6 +1,7 @@
 package fun.tianlefirstweb.www.product.lipstick;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import fun.tianlefirstweb.www.product.brand.Brand;
 import fun.tianlefirstweb.www.product.lipstickColor.LipstickColor;
@@ -21,22 +22,26 @@ public class Lipstick {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JsonIgnore
+    @JsonManagedReference("lipstick-colors")
     @OneToMany(
             mappedBy = "lipstick",
             cascade = ALL,
             orphanRemoval = true,
             fetch = EAGER
     )
-    @JsonManagedReference
     private List<LipstickColor> colors;
 
     private String name;
     private String price;
     private String imageUrl;
 
+    @Column(columnDefinition = "boolean default true")
+    private Boolean active;
+
+    @JsonBackReference("brand-lipsticks")
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "brand_id")
-    @JsonBackReference
     private Brand brand;
 
     public Lipstick() {

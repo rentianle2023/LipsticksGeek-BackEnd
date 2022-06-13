@@ -28,6 +28,6 @@ public class Brand {
             orphanRemoval = true,
             fetch = LAZY
     )
-    @JsonBackReference
+    @JsonBackReference("brand-lipsticks")
     private List<Lipstick> lipsticks;
 }

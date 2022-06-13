@@ -1,5 +1,6 @@
 package fun.tianlefirstweb.www;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EncryptablePropertySource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -15,6 +16,7 @@ import java.time.Duration;
 
 @SpringBootApplication
 @RestController
+@EncryptablePropertySource(name = "EncryptedProperties", value = {"classpath:application-dev.yaml","classpath:application-prod.yaml"})
 public class LipstickApplication {
 
     @Bean

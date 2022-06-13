@@ -1,3 +1,8 @@
+jasypt:
+  encryptor:
+    password: ${ENCRYPTOR_PASSWORD}
+    algorithm: PBEWithMD5AndDes
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
 spring:
   jpa:
     database: mysql
@@ -7,7 +12,7 @@ spring:
   #    open-in-view: false
   datasource:
     username: root
-    password: franK1100
+    password: ENC(ypsHAcE8q7BNlp3kq7XY8npjT563AoeM)
     url: jdbc:mysql://47.106.137.238:3306/test?serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
@@ -29,9 +34,8 @@ server:
 
 #custom configurations
 application:
-
   jwt:
-    secretKey : "securesecuresecuresecuresecuresecuresecure"
+    secretKey : ENC(79f/Z0XluIlmDjSEx5Gkqle5hVjB1G5XlwYpJ27DKSHcP24IcZzfJaic9zvwov4aroAZZeYNZjM=)
     authorizationHeader : "Authorization"
     tokenPrefix : "Bearer "
     tokenExpirationAfterDays : 5
@@ -44,8 +48,8 @@ application:
     client:
       registrations:
         github :
-          clientId: "f54e93ac72515410a3b0"
-          clientSecret: "dfc09cf8c72608a55e77753103207df8023c361c"
+          clientId: ENC(VUe9YoFK1nK1BZZq+x00lEGzftZzXL2lCBvL14CFuXM=)
+          clientSecret: ENC(7S9EJjPaOXbK4pMZMih2VLgWrLk/xHfzbCeuRXWWSg14SYOdvE1jzO/kGJLmn32Y4I0ixDbhYYA=)
       jsonFields:
         github :
           username : "login"
