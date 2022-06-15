@@ -3,6 +3,7 @@ package fun.tianlefirstweb.www.security;
 import fun.tianlefirstweb.www.security.jwt.JwtConfig;
 import fun.tianlefirstweb.www.security.jwt.JwtTokenVerifier;
 import fun.tianlefirstweb.www.security.jwt.JwtUsernamePasswordAuthFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -69,8 +70,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //session management
                 .and()
-                .addFilter(new JwtUsernamePasswordAuthFilter(authenticationManager(), jwtConfig, secretKey)) //sign JSON token
-                .addFilterAfter(new JwtTokenVerifier(jwtConfig, secretKey), JwtUsernamePasswordAuthFilter.class) //verify JSON token
+                .addFilter(new JwtUsernamePasswordAuthFilter(authenticationManager(), jwtConfig)) //sign JSON token
+                .addFilterAfter(new JwtTokenVerifier(jwtConfig), JwtUsernamePasswordAuthFilter.class) //verify JSON token
                 .authorizeRequests()
                 .anyRequest().permitAll();
     }

@@ -50,17 +50,19 @@ public class ApplicationUser {
     private List<ApplicationRole> roles;
 
     @OneToMany(mappedBy = "user")
-    @JsonBackReference
+    @JsonBackReference("user-favorite")
     private List<Favorite> favoriteColors;
 
     @OneToMany(mappedBy = "user")
-    @JsonBackReference
+    @JsonBackReference("user-oauth")
     private List<OauthUser> oAuthUsers;
 
     @OneToMany(mappedBy = "user")
+    @JsonBackReference("user-comments")
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "user")
+    @JsonBackReference("user-replies")
     private List<Reply> replies;
 
     public ApplicationUser(String username, String password, String avatar, String nickname, List<ApplicationRole> roles) {

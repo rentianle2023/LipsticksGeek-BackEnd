@@ -18,4 +18,12 @@ public class UserInformationDTO {
     private String avatar;
     private Gender gender;
     private List<ApplicationRole> roles;
+
+    public UserInformationDTO(ApplicationUser user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.avatar = user.getAvatar();
+        this.gender = user.getGender();
+        this.roles = user.getRoles();
+    }
 }

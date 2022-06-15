@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import fun.tianlefirstweb.www.favorite.Favorite;
 import fun.tianlefirstweb.www.product.lipstick.Lipstick;
 import fun.tianlefirstweb.www.user.ApplicationUser;
+import fun.tianlefirstweb.www.user.role.ApplicationRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,6 +38,13 @@ public class LipstickColor {
     @JsonBackReference("favorite-users")
     @OneToMany(mappedBy = "color")
     private List<Favorite> favoriteUsers;
+
+    @ManyToMany
+    @JoinTable(
+            name = "color_tag",
+            joinColumns = @JoinColumn(name = "color_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private List<Tag> tags;
 
     public LipstickColor(String name, String hexColor) {
         this.name = name;

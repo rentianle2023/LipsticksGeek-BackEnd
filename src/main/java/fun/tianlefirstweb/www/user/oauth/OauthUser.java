@@ -19,7 +19,7 @@ public class OauthUser {
     private String username;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference("user-oauth")
     private ApplicationUser user;
 
     @Enumerated(EnumType.STRING)

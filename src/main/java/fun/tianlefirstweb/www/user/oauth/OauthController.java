@@ -22,12 +22,10 @@ public class OauthController {
 
     private final OauthService oauthService;
     private final JwtConfig jwtConfig;
-    private final SecretKey secretKey;
 
-    public OauthController(OauthService oauthService, JwtConfig jwtConfig, SecretKey secretKey) {
+    public OauthController(OauthService oauthService, JwtConfig jwtConfig) {
         this.oauthService = oauthService;
         this.jwtConfig = jwtConfig;
-        this.secretKey = secretKey;
     }
 
     @GetMapping("/{provider}/{code}")
@@ -45,17 +43,7 @@ public class OauthController {
         List<SimpleGrantedAuthority> authorities = user.getRoles()
                 .stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole().name()))
                 .collect(Collectors.toList());
-        signToken(user.getUsername(),authorities,response);
+        jwtConfig.signToken(user.getUsername(),authorities,response);
         return ResponseEntity.ok().build();
-    }
-
-    private void signToken(String username, Collection<? extends GrantedAuthority> authorities, HttpServletResponse response){
-        String token = Jwts.builder()
-                .setSubject(username)
-                .claim("authorities", authorities)
-                .setExpiration(Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpirationAfterDays())))
-                .signWith(secretKey)
-                .compact();
-        response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
     }
 }

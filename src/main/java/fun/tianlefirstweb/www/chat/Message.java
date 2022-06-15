@@ -1,6 +1,7 @@
 package fun.tianlefirstweb.www.chat;
 
 import lombok.Data;
+import org.springframework.messaging.MessageHeaders;
 
 @Data
 public class Message {

@@ -25,22 +25,22 @@ public class UserController {
 
     private final UserService userService;
     private final RoleService roleService;
-    private final LipstickColorService colorService;
     private final PasswordEncoder passwordEncoder;
 
     public UserController(UserService userService,
                           RoleService roleService,
-                          LipstickColorService colorService, PasswordEncoder passwordEncoder) {
+                          PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
-        this.colorService = colorService;
         this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> userRegister(@Valid @RequestBody UserRegisterDTO userRegisterDTO){
-        ApplicationUser user = new ApplicationUser();
+
         ApplicationRole userRole = roleService.findByRole(USER);
+
+        ApplicationUser user = new ApplicationUser();
         user.setUsername(userRegisterDTO.getUsername());
         user.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
         user.setEmail(userRegisterDTO.getEmail());
@@ -51,24 +51,17 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<ApplicationUser> getAuthenticatedUser(Authentication authentication){
+    public ResponseEntity<UserInformationDTO> getAuthenticatedUser(Authentication authentication){
         if(authentication == null || !authentication.isAuthenticated())
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         ApplicationUser user = userService.findByUsername(authentication.getName());
-        user.setPassword(null);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(new UserInformationDTO(user));
     }
 
     @GetMapping("/{username}")
     public ResponseEntity<UserInformationDTO> getUser(@PathVariable String username){
         ApplicationUser user = userService.findByUsername(username);
-        UserInformationDTO userInformation = new UserInformationDTO(
-                user.getId(),
-                user.getUsername(),
-                user.getAvatar(),
-                user.getGender(),
-                user.getRoles()
-        );
+        UserInformationDTO userInformation = new UserInformationDTO(user);
         return ResponseEntity.ok(userInformation);
     }
 }

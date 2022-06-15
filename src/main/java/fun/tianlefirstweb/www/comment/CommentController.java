@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,7 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity<?> addComment(Authentication authentication,
-                                        @RequestBody Comment comment){
+                                        @Valid @RequestBody Comment comment){
         System.out.println(comment.getContent());
         ApplicationUser user = userService.findByUsername(authentication.getName());
         comment.setUser(user);
@@ -48,7 +49,7 @@ public class CommentController {
     @PostMapping("/{commentId}/reply")
     public ResponseEntity<ReplyDTO> addReply(
             @PathVariable("commentId") Integer commentId,
-            @RequestBody Reply reply,
+            @Valid @RequestBody Reply reply,
             Authentication authentication){
         ApplicationUser user = userService.findByUsername(authentication.getName());
         reply.setUser(user);

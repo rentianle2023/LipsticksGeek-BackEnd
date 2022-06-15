@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 
 @Entity
@@ -19,10 +20,13 @@ public class Reply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Timestamp createTime;
+
+    @NotBlank(message = "回复内容不能为空")
     private String content;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private ApplicationUser user;
 
     @ManyToOne(fetch = FetchType.LAZY)

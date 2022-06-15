@@ -29,14 +29,11 @@ public class JwtUsernamePasswordAuthFilter extends UsernamePasswordAuthenticatio
 
     private final AuthenticationManager authenticationManager;
     private final JwtConfig jwtConfig;
-    private final SecretKey secretKey;
 
     public JwtUsernamePasswordAuthFilter(AuthenticationManager authenticationManager,
-                                         JwtConfig jwtConfig,
-                                         SecretKey secretKey) {
+                                         JwtConfig jwtConfig) {
         this.authenticationManager = authenticationManager;
         this.jwtConfig = jwtConfig;
-        this.secretKey = secretKey;
     }
 
     @Override
@@ -59,18 +56,8 @@ public class JwtUsernamePasswordAuthFilter extends UsernamePasswordAuthenticatio
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
-        signToken(authResult.getName(),authResult.getAuthorities(),response);
+        jwtConfig.signToken(authResult.getName(),authResult.getAuthorities(),response);
 
         chain.doFilter(request, response);
-    }
-
-    public void signToken(String username, Collection<? extends GrantedAuthority> authorities, HttpServletResponse response){
-        String token = Jwts.builder()
-                .setSubject(username)
-                .claim("authorities", authorities)
-                .setExpiration(Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpirationAfterDays())))
-                .signWith(secretKey)
-                .compact();
-        response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
     }
 }

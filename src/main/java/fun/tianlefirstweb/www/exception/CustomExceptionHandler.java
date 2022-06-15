@@ -29,7 +29,7 @@ public class CustomExceptionHandler {
      * server is acting as a gateway, but received an invalid response from upstream server
      */
     @ExceptionHandler(UnableToConnectException.class)
-    public ResponseEntity<ExceptionBody> handleGatewayException(IllegalArgumentException e){
+    public ResponseEntity<ExceptionBody> handleGatewayException(UnableToConnectException e){
         ExceptionBody exceptionBody = new ExceptionBody(
                 e.getMessage(),
                 BAD_GATEWAY,
