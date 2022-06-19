@@ -38,7 +38,7 @@ public class CrawlerService {
             }
             else{
                 Lipstick persistLipstick = lipstickService.findByName(lipstick.getName());
-                List<LipstickColor> colors = lipstickService.findByName(lipstick.getName()).getColors();
+                List<LipstickColor> colors = persistLipstick.getColors();
                 lipstick.getColors().forEach(color -> {
                     if(!colors.contains(color)) {
                         color.setLipstick(persistLipstick);

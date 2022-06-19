@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 import static fun.tianlefirstweb.www.crawler.BrandInfo.TOMFORD;
 
 @Component
+@Deprecated
 public class TomFordFetcher extends LipstickFetcher{
 
     private Document getDocument(String url){
@@ -57,10 +58,10 @@ public class TomFordFetcher extends LipstickFetcher{
 
                     Element linkElement = div.getElementsByClass("name-link").first();
                     String link = linkElement.attr("href");
+                    System.out.println(link);
                     Lipstick lipstick = getLipstick(link);
                     String name = linkElement.text();
                     String price = div.getElementsByClass("product-sales-price").first().text();
-
                     lipstick.setPrice(price);
                     lipstick.setName(name);
                     return lipstick;

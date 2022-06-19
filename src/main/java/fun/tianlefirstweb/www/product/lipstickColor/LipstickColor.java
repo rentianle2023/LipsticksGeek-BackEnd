@@ -1,6 +1,8 @@
 package fun.tianlefirstweb.www.product.lipstickColor;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import fun.tianlefirstweb.www.favorite.Favorite;
 import fun.tianlefirstweb.www.product.lipstick.Lipstick;
 import fun.tianlefirstweb.www.user.ApplicationUser;
@@ -27,13 +29,9 @@ public class LipstickColor {
     private String hexColor;
 
     @JsonBackReference("lipstick-colors")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lipstick_id")
     private Lipstick lipstick;
-
-//    private Integer hue;
-//    private Integer saturation;
-//    private Integer brightness;
 
     @JsonBackReference("favorite-users")
     @OneToMany(mappedBy = "color")
@@ -44,6 +42,7 @@ public class LipstickColor {
             name = "color_tag",
             joinColumns = @JoinColumn(name = "color_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Tag> tags;
 
     public LipstickColor(String name, String hexColor) {

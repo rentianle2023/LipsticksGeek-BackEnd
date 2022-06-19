@@ -1,6 +1,7 @@
 package fun.tianlefirstweb.www.product.lipstickColor;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,6 @@ public class Tag {
             name = "color_tag",
             joinColumns = @JoinColumn(name = "tag_id"),
             inverseJoinColumns = @JoinColumn(name = "color_id"))
-    @JsonBackReference
+    @JsonIgnore
     private List<LipstickColor> colors;
 }

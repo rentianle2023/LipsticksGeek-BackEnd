@@ -21,6 +21,11 @@ public class ChatController {
         this.simpUserRegistry = simpUserRegistry;
     }
 
+    /**
+     * 发送信息到公共频道
+     * @param message 消息
+     * @return 广播到所有订阅/chatroom/public的用户
+     */
     @MessageMapping("/message")
     @SendTo("/chatroom/public")
     public Message receivePublicMessage(@Payload Message message){
@@ -30,6 +35,11 @@ public class ChatController {
         return message;
     }
 
+    /**
+     * 发送信息到私人频道
+     * @param message 包含receiver信息的消息
+     * @return 转发给订阅/user/{username}/private的用户
+     */
     @MessageMapping("/private-message")
     public Message receivePrivateMessage(@Payload Message message){
         messagingTemplate.convertAndSendToUser(message.getReceiver(),"/private", message);

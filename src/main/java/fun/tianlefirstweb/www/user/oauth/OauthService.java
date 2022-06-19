@@ -5,6 +5,7 @@ import fun.tianlefirstweb.www.user.UserService;
 import fun.tianlefirstweb.www.user.enums.Role;
 import fun.tianlefirstweb.www.user.role.ApplicationRole;
 import fun.tianlefirstweb.www.user.role.RoleService;
+import org.apache.commons.text.RandomStringGenerator;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -83,11 +84,16 @@ public class OauthService {
     }
 
     public String getNonExistingUsername(String username){
-        String extraAlphabet = "123_xyz";
-        Random r = new Random();
-        while(userService.existsByUsername(username)){
-            username = username + extraAlphabet.charAt(r.nextInt(extraAlphabet.length()));
-        }
+        if(!userService.existsByUsername(username)) return username;
+
+        RandomStringGenerator randomStringGenerator = new RandomStringGenerator.Builder()
+                .withinRange('a','z').build();
+        String originalUsername = username;
+
+        do{
+            username = originalUsername + randomStringGenerator.generate(5);
+        }while(userService.existsByUsername(username));
+
         return username;
     }
 

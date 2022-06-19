@@ -20,6 +20,7 @@ public class LipstickService {
     }
 
     public void save(Lipstick lipstick){
+        lipstick.setActive(true);
         lipstickRepository.save(lipstick);
     }
 
@@ -44,13 +45,14 @@ public class LipstickService {
         lipstickRepository.save(lipstick);
     }
 
+
     public Lipstick findByName(String lipstickName){
-        return lipstickRepository.findByNameAndActive(lipstickName,true)
+        return lipstickRepository.findByName(lipstickName)
                 .orElseThrow(() -> new EntityNotExistException(String.format("名称为%s的口红不存在",lipstickName)));
     }
 
-    public boolean existsByName(String lipstickName){
-        return lipstickRepository.existsByNameAndActive(lipstickName,true);
+    public boolean existsByName(String lipstickName) {
+        return lipstickRepository.existsByName(lipstickName);
     }
 
     public List<Lipstick> findAll() {

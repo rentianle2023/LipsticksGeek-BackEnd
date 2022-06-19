@@ -15,9 +15,9 @@ public interface LipstickRepository extends PagingAndSortingRepository<Lipstick,
 
     List<Lipstick> findLipsticksByBrandIdAndActive(Integer brandId,boolean active);
 
-    Boolean existsByNameAndActive(String lipstickName, boolean active);
+    Boolean existsByName(String lipstickName);
 
-    Optional<Lipstick> findByNameAndActive(String lipstickName, boolean active);
+    Optional<Lipstick> findByName(String lipstickName);
 
     Optional<Lipstick> findByIdAndActive(Integer id, boolean active);
 

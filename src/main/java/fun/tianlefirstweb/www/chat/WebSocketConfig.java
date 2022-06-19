@@ -17,13 +17,19 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         this.authChannelInterceptorAdapter = authChannelInterceptorAdapter;
     }
 
+    /**
+     * 设置允许的转发地址前缀，用户地址前缀，和程序接收的地址前缀
+     */
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/chatroom","/user");
-        config.setApplicationDestinationPrefixes("/chat");
         config.setUserDestinationPrefix("/user");
+        config.setApplicationDestinationPrefixes("/chat");
     }
 
+    /**
+     * 设置允许建立连接和发送消息的终端地址，设置STOMP协议
+     */
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")

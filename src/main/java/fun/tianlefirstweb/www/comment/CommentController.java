@@ -24,15 +24,22 @@ public class CommentController {
         this.userService = userService;
     }
 
+    /**
+     * 添加留言
+     * @param authentication 获取当前用户信息
+     * @param comment 留言
+     */
     @PostMapping
-    public ResponseEntity<?> addComment(Authentication authentication,
+    public ResponseEntity<CommentDTO> addComment(Authentication authentication,
                                         @Valid @RequestBody Comment comment){
-        System.out.println(comment.getContent());
         ApplicationUser user = userService.findByUsername(authentication.getName());
         comment.setUser(user);
         return ResponseEntity.ok(new CommentDTO(commentService.addComment(comment)));
     }
 
+    /**
+     * 获取所有留言
+     */
     @GetMapping
     public ResponseEntity<List<CommentDTO>> findAllComments(){
         List<CommentDTO> comments = commentService.findAllComments()
@@ -46,6 +53,12 @@ public class CommentController {
         return ResponseEntity.ok(comments);
     }
 
+    /**
+     * 给指定留言添加回复信息
+     * @param commentId 留言id
+     * @param reply 回复信息
+     * @param authentication 回复用户信息
+     */
     @PostMapping("/{commentId}/reply")
     public ResponseEntity<ReplyDTO> addReply(
             @PathVariable("commentId") Integer commentId,
