@@ -23,6 +23,10 @@ spring:
       maximum-pool-size: 10
       minimum-idle: 10
       read-only: false
+  redis:
+    host: 47.106.137.238
+    password: ENC(ypsHAcE8q7BNlp3kq7XY8npjT563AoeM)
+    port: 6379
 logging:
   level:
     root: info
