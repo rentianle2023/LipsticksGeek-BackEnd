@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -20,8 +22,15 @@ public class CommentService {
     }
 
     public Comment addComment(Comment comment){
-        comment.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
-        return commentRepository.save(comment);
+        Timestamp ttt = Timestamp.valueOf(ZonedDateTime.now(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
+        System.out.println(ttt.toString());
+
+        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+        comment.setCreateTime(timestamp);
+        System.out.println("before save : " + timestamp.toString());
+        Comment save = commentRepository.save(comment);
+        System.out.println("after save : " + save.getCreateTime().toString());
+        return save;
     }
 
     public List<Comment> findAllComments(){
