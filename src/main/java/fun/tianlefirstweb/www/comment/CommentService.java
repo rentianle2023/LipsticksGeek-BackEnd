@@ -22,15 +22,9 @@ public class CommentService {
     }
 
     public Comment addComment(Comment comment){
-        Timestamp ttt = Timestamp.valueOf(ZonedDateTime.now(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
-        System.out.println(ttt.toString());
-
-        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+        Timestamp timestamp = Timestamp.valueOf(ZonedDateTime.now(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
         comment.setCreateTime(timestamp);
-        System.out.println("before save : " + timestamp.toString());
-        Comment save = commentRepository.save(comment);
-        System.out.println("after save : " + save.getCreateTime().toString());
-        return save;
+        return commentRepository.save(comment);
     }
 
     public List<Comment> findAllComments(){
