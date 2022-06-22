@@ -14,7 +14,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @NoArgsConstructor
 @Data
-public class Brand implements Serializable {
+public class Brand {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

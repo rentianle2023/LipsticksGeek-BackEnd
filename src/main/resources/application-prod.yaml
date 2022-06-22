@@ -13,7 +13,7 @@ spring:
   datasource:
     username: root
     password: ENC(ypsHAcE8q7BNlp3kq7XY8npjT563AoeM)
-    url: jdbc:mysql://47.106.137.238:3306/test?serverTimezone=UTC
+    url: jdbc:mysql://47.106.137.238:3306/test?serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       connection-timeout: 60000

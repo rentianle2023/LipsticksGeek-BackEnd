@@ -12,25 +12,25 @@ import java.util.stream.Collectors;
 @Repository
 public class BrandCache {
 
-    private final RedisTemplate<String,Brand> redisTemplate;
-    private final String BRAND_HASH_KEY = "BRAND";
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final String BRAND_KEY = "BRAND";
     private final HashOperations<String,Integer,Brand> hashOperations;
 
-    public BrandCache(RedisTemplate<String,Brand> redisTemplate) {
+    public BrandCache(RedisTemplate<String,Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
         this.hashOperations = redisTemplate.opsForHash();
     }
 
     public void save(Brand brand) {
-        hashOperations.put(BRAND_HASH_KEY,brand.getId(),brand);
+        hashOperations.put(BRAND_KEY,brand.getId(),brand);
     }
 
     public Brand findById(Integer brandId) {
-        return (Brand)redisTemplate.opsForHash().get(BRAND_HASH_KEY,brandId);
+        return (Brand)redisTemplate.opsForHash().get(BRAND_KEY,brandId);
     }
 
     public List<Brand> findAll(){
-        return hashOperations.values(BRAND_HASH_KEY);
+        return hashOperations.values(BRAND_KEY);
     }
 
     public void update(Brand brand) {
@@ -38,16 +38,16 @@ public class BrandCache {
     }
 
     public void delete(Integer id) {
-        hashOperations.delete(BRAND_HASH_KEY,id);
+        hashOperations.delete(BRAND_KEY,id);
     }
 
     public void deleteAll(){
-        redisTemplate.delete(BRAND_HASH_KEY);
+        redisTemplate.delete(BRAND_KEY);
     }
 
     public void saveAll(List<Brand> brands){
         Map<Integer, Brand> brandsMap = brands.stream().collect(
                 Collectors.toMap(Brand::getId, brand -> brand));
-        hashOperations.putAll(BRAND_HASH_KEY,brandsMap);
+        hashOperations.putAll(BRAND_KEY,brandsMap);
     }
 }

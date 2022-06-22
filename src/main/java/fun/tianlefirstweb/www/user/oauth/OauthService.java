@@ -56,7 +56,6 @@ public class OauthService {
         ResponseEntity<String> userInfo = restTemplate.exchange(userInfoUri,HttpMethod.GET,entity,String.class);
         OauthUserInfo fields = oauthConfig.getJsonFields().get(provider.getProvider());
         return new OauthUserInfo(userInfo.getBody(),fields);
-
     }
 
     public ApplicationUser registerOauthUser(String username, String avatar, String nickname, OauthProvider provider){

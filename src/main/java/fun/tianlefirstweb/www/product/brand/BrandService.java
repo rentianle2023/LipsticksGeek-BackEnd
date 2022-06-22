@@ -21,16 +21,17 @@ public class BrandService {
         this.brandCache = brandCache;
     }
 
-    //DOUBLE DELETE???
     public void save(Brand brand){
-        new Thread(brandCache::deleteAll).start();
         if(brandRepository.existsBrandByName(brand.getName())){
             throw new EntityAlreadyExistException(String.format("%s品牌已存在",brand.getName()));
         }
+        brandCache.deleteAll();
         brandRepository.save(brand);
     }
 
-    //CACHE before DB ?
+    /**
+     * 获取所有品牌信息，缓存优先
+     */
     public List<Brand> findBrands(){
         List<Brand> cachedBrands = brandCache.findAll();
         if(!cachedBrands.isEmpty()) {
@@ -40,12 +41,5 @@ public class BrandService {
         List<Brand> brands = brandRepository.findAll();
         brandCache.saveAll(brands);
         return brands;
-    }
-
-    //TODO:没用
-    public Page<Brand> findBrandsWithPagination(int page, int size){
-        return brandRepository.findAll(
-                PageRequest.of(page, size)
-        );
     }
 }

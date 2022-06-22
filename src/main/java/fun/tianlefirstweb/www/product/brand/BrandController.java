@@ -36,21 +36,6 @@ public class BrandController {
         return ResponseEntity.ok(lipstickService.findByBrandId(brandId));
     }
 
-    @GetMapping("/{page}/{size}")
-    public ResponseEntity<List<Brand>> findBrandsWithPagination(
-            @PathVariable("page") int page,
-            @PathVariable("size") int size,
-            HttpServletResponse response) {
-        Page<Brand> brandPage = brandService.findBrandsWithPagination(page, size);
-        if(page >= brandPage.getTotalPages()){
-            throw new EntityNotExistException("超出可查询范围");
-        }
-
-        response.setHeader("X-Total-Count",String.valueOf(brandPage.getTotalElements()));
-
-        return ResponseEntity.ok(brandPage.getContent());
-    }
-
     @PostMapping
     public ResponseEntity<?> saveBrand(@RequestBody Brand brand){
         brandService.save(brand);
