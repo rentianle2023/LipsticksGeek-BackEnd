@@ -17,7 +17,7 @@ public class UserService {
     public ApplicationUser save(ApplicationUser user) {
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new UserAlreadyExistException("注册用户名已存在");
-        } else if (userRepository.existsByEmail(user.getEmail())) {
+        } else if (user.getEmail() != null && !user.getEmail().isEmpty() && userRepository.existsByEmail(user.getEmail())) {
             throw new UserAlreadyExistException("注册邮箱已存在");
         }
         return userRepository.save(user);

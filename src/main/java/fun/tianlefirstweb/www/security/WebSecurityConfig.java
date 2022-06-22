@@ -3,16 +3,13 @@ package fun.tianlefirstweb.www.security;
 import fun.tianlefirstweb.www.security.jwt.JwtConfig;
 import fun.tianlefirstweb.www.security.jwt.JwtTokenVerifier;
 import fun.tianlefirstweb.www.security.jwt.JwtUsernamePasswordAuthFilter;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -20,8 +17,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import javax.crypto.SecretKey;
 import java.util.List;
 
-import static fun.tianlefirstweb.www.user.enums.Role.ADMIN;
-import static fun.tianlefirstweb.www.user.enums.Role.USER;
+import static fun.tianlefirstweb.www.user.role.Role.ADMIN;
+import static fun.tianlefirstweb.www.user.role.Role.USER;
 import static org.springframework.http.HttpMethod.*;
 
 @Configuration

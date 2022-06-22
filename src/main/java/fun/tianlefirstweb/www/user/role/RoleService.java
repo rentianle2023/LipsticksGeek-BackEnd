@@ -1,7 +1,6 @@
 package fun.tianlefirstweb.www.user.role;
 
 import fun.tianlefirstweb.www.exception.EntityNotExistException;
-import fun.tianlefirstweb.www.user.enums.Role;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,4 +1,4 @@
-package fun.tianlefirstweb.www.product.lipstickColor;
+package fun.tianlefirstweb.www.product.tag;
 
 public enum TagTitle {
 

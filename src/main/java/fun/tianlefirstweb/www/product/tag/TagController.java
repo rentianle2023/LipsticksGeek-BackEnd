@@ -1,9 +1,9 @@
-package fun.tianlefirstweb.www.product.lipstickColor;
+package fun.tianlefirstweb.www.product.tag;
 
+import fun.tianlefirstweb.www.product.lipstickColor.LipstickColorDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

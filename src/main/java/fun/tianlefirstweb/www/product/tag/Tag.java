@@ -1,7 +1,7 @@
-package fun.tianlefirstweb.www.product.lipstickColor;
+package fun.tianlefirstweb.www.product.tag;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import fun.tianlefirstweb.www.product.lipstickColor.LipstickColor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

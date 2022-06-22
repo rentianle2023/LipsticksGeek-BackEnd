@@ -1,11 +1,9 @@
 package fun.tianlefirstweb.www.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import fun.tianlefirstweb.www.comment.Comment;
 import fun.tianlefirstweb.www.comment.Reply;
 import fun.tianlefirstweb.www.favorite.Favorite;
-import fun.tianlefirstweb.www.user.enums.Gender;
 import fun.tianlefirstweb.www.user.oauth.OauthUser;
 import fun.tianlefirstweb.www.user.role.ApplicationRole;
 import lombok.Data;
@@ -40,9 +38,6 @@ public class ApplicationUser {
 
     private Date birthday;
 
-    @Enumerated(STRING)
-    private Gender gender;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
@@ -54,7 +49,7 @@ public class ApplicationUser {
     @JsonBackReference("user-favorite")
     private List<Favorite> favoriteColors;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference("user-oauth")
     private List<OauthUser> oAuthUsers;
 

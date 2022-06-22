@@ -1,7 +1,9 @@
 package fun.tianlefirstweb.www.product.lipstickColor;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-public interface LipstickColorRepository extends CrudRepository<LipstickColor,Integer> {
+import java.util.Optional;
 
+public interface LipstickColorRepository extends CrudRepository<LipstickColor, Integer> {
 }

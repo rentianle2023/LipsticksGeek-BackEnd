@@ -1,11 +1,11 @@
 package fun.tianlefirstweb.www.product.lipstickColor;
 
-import fun.tianlefirstweb.www.product.lipstick.Lipstick;
 import fun.tianlefirstweb.www.product.lipstick.LipstickDTO;
+import fun.tianlefirstweb.www.product.tag.Tag;
+import fun.tianlefirstweb.www.product.tag.TagService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -47,5 +47,11 @@ public class LipstickColorController {
         color.getTags().add(tag);
         lipstickColorService.save(color);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{colorId}/details")
+    public ResponseEntity<LipstickColorDetailsDTO> findLipstickDetailsById(@PathVariable Integer colorId) {
+        return ResponseEntity.ok(
+                lipstickColorService.findColorDetailsById(colorId));
     }
 }

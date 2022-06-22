@@ -1,4 +1,4 @@
-package fun.tianlefirstweb.www.product.lipstickColor;
+package fun.tianlefirstweb.www.product.tag;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

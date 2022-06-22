@@ -1,5 +1,4 @@
 package fun.tianlefirstweb.www.user;
-import fun.tianlefirstweb.www.user.enums.Gender;
 import fun.tianlefirstweb.www.user.role.ApplicationRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,14 +15,12 @@ public class UserInformationDTO {
 
     private String username;
     private String avatar;
-    private Gender gender;
     private List<ApplicationRole> roles;
 
     public UserInformationDTO(ApplicationUser user) {
         this.id = user.getId();
         this.username = user.getUsername();
         this.avatar = user.getAvatar();
-        this.gender = user.getGender();
         this.roles = user.getRoles();
     }
 }

@@ -1,9 +1,8 @@
-package fun.tianlefirstweb.www.product.lipstickColor;
+package fun.tianlefirstweb.www.product.tag;
 
 import fun.tianlefirstweb.www.exception.EntityNotExistException;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service

@@ -23,8 +23,8 @@ public class LipstickApplication {
     public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder)
     {
         return restTemplateBuilder
-                .setConnectTimeout(Duration.ofSeconds(500))
-                .setReadTimeout(Duration.ofSeconds(500))
+                .setConnectTimeout(Duration.ofSeconds(3))
+                .setReadTimeout(Duration.ofSeconds(6))
                 .build();
     }
     public static void main(String[] args) {

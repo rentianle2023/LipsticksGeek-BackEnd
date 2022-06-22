@@ -2,7 +2,7 @@ package fun.tianlefirstweb.www.user.oauth;
 
 import fun.tianlefirstweb.www.user.ApplicationUser;
 import fun.tianlefirstweb.www.user.UserService;
-import fun.tianlefirstweb.www.user.enums.Role;
+import fun.tianlefirstweb.www.user.role.Role;
 import fun.tianlefirstweb.www.user.role.ApplicationRole;
 import fun.tianlefirstweb.www.user.role.RoleService;
 import org.apache.commons.text.RandomStringGenerator;
@@ -12,7 +12,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 @Service

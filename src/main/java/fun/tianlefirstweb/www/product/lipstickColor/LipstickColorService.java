@@ -1,6 +1,7 @@
 package fun.tianlefirstweb.www.product.lipstickColor;
 
 import fun.tianlefirstweb.www.exception.EntityNotExistException;
+import fun.tianlefirstweb.www.product.lipstick.Lipstick;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,5 +31,10 @@ public class LipstickColorService {
 
     public void save(LipstickColor lipstickColor){
         lipstickColorRepository.save(lipstickColor);
+    }
+
+    public LipstickColorDetailsDTO findColorDetailsById(Integer colorId) {
+        LipstickColor color = findById(colorId);
+        return new LipstickColorDetailsDTO(color);
     }
 }

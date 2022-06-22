@@ -2,7 +2,6 @@ package fun.tianlefirstweb.www.user.role;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import fun.tianlefirstweb.www.user.ApplicationUser;
-import fun.tianlefirstweb.www.user.enums.Role;
 import lombok.Data;
 
 import javax.persistence.*;

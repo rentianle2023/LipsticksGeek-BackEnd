@@ -12,8 +12,8 @@ spring:
 #    open-in-view: false
   datasource:
     username: root
-    password: ENC(ypsHAcE8q7BNlp3kq7XY8npjT563AoeM)
-    url: jdbc:mysql://47.106.137.238:3306/test?serverTimezone=UTC
+    password: 1028
+    url: jdbc:mysql://localhost:3306/test?serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       connection-timeout: 60000
@@ -23,6 +23,10 @@ spring:
       maximum-pool-size: 10
       minimum-idle: 10
       read-only: false
+  redis:
+    host: 47.106.137.238
+    password: ENC(ypsHAcE8q7BNlp3kq7XY8npjT563AoeM)
+    port: 6379
 logging:
   level:
     root: info

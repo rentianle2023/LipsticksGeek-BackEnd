@@ -1,7 +1,5 @@
 package fun.tianlefirstweb.www.user;
 
-import fun.tianlefirstweb.www.product.lipstickColor.LipstickColorService;
-import fun.tianlefirstweb.www.user.enums.Gender;
 import fun.tianlefirstweb.www.user.role.ApplicationRole;
 import fun.tianlefirstweb.www.user.role.RoleService;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-import static fun.tianlefirstweb.www.user.enums.Role.USER;
+import static fun.tianlefirstweb.www.user.role.Role.USER;
 
 @RestController
 @RequestMapping("/users")
