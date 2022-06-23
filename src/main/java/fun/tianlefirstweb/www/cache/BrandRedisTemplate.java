@@ -10,13 +10,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository
-public class BrandCache {
+public class BrandRedisTemplate {
 
     private final RedisTemplate<String, Object> redisTemplate;
     private final String BRAND_KEY = "BRAND";
     private final HashOperations<String,Integer,Brand> hashOperations;
 
-    public BrandCache(RedisTemplate<String,Object> redisTemplate) {
+    public BrandRedisTemplate(RedisTemplate<String,Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
         this.hashOperations = redisTemplate.opsForHash();
     }
@@ -25,20 +25,8 @@ public class BrandCache {
         hashOperations.put(BRAND_KEY,brand.getId(),brand);
     }
 
-    public Brand findById(Integer brandId) {
-        return (Brand)redisTemplate.opsForHash().get(BRAND_KEY,brandId);
-    }
-
     public List<Brand> findAll(){
         return hashOperations.values(BRAND_KEY);
-    }
-
-    public void update(Brand brand) {
-        save(brand);
-    }
-
-    public void delete(Integer id) {
-        hashOperations.delete(BRAND_KEY,id);
     }
 
     public void deleteAll(){

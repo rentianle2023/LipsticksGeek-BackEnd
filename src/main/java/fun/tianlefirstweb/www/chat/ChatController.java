@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 
 @Controller
@@ -42,6 +44,12 @@ public class ChatController{
             case LEAVE: message.setData(String.valueOf(simpUserRegistry.getUserCount() - 1)); break;
             case MESSAGE: {
                 redisTemplate.opsForList().rightPush(MESSAGES_KEY,message);
+                Boolean expire = redisTemplate.expireAt(
+                        MESSAGES_KEY,
+                        Instant.now().plus(Duration.ofHours(1))
+                );
+                System.out.println(expire);
+                System.out.println(redisTemplate.getExpire(MESSAGES_KEY));
             }
         }
 

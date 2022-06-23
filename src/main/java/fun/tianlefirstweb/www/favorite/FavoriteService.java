@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -31,7 +33,7 @@ public class FavoriteService {
         if(favoriteRepository.existsByUserAndColor(user,color)){
             throw new EntityAlreadyExistException("收藏已存在，请勿重复收藏");
         }
-        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+        Timestamp timestamp = Timestamp.valueOf(ZonedDateTime.now(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
         favoriteRepository.save(new Favorite(user,color,timestamp));
         return new FavoriteResponseDTO(color.getId(),color.getName(),color.getHexColor(),timestamp);
     }

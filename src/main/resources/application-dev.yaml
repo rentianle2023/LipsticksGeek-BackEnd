@@ -12,8 +12,8 @@ spring:
 #    open-in-view: false
   datasource:
     username: root
-    password: ENC(ypsHAcE8q7BNlp3kq7XY8npjT563AoeM)
-    url: jdbc:mysql://47.106.137.238:3306/test?serverTimezone=Asia/Shanghai
+    password: 1028
+    url: jdbc:mysql://localhost:3306/test?serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       connection-timeout: 60000

@@ -23,8 +23,11 @@ public class CommentService {
 
     public Comment addComment(Comment comment){
         Timestamp timestamp = Timestamp.valueOf(ZonedDateTime.now(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
+        System.out.println(timestamp.toString());
         comment.setCreateTime(timestamp);
-        return commentRepository.save(comment);
+        Comment save = commentRepository.save(comment);
+        System.out.println(save.getCreateTime().toString());
+        return save;
     }
 
     public List<Comment> findAllComments(){
