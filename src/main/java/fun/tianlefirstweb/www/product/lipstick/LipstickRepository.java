@@ -1,11 +1,8 @@
 package fun.tianlefirstweb.www.product.lipstick;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
@@ -13,17 +10,25 @@ import java.util.Optional;
 
 public interface LipstickRepository extends PagingAndSortingRepository<Lipstick,Integer> {
 
-    List<Lipstick> findLipsticksByBrandIdAndActive(Integer brandId,boolean active);
+    @Query("SELECT DISTINCT l FROM Lipstick l LEFT JOIN FETCH l.colors WHERE l.brand.id = :brandId AND l.active = :active")
+    List<Lipstick> findLipsticksWithColorsByBrandIdAndActive(Integer brandId,boolean active);
 
     Boolean existsByName(String lipstickName);
 
-    Optional<Lipstick> findByName(String lipstickName);
-
-    Optional<Lipstick> findByIdAndActive(Integer id, boolean active);
-
-    boolean existsByIdAndActive(Integer id, boolean active);
-
-    Page<Lipstick> findAllByActive(boolean active, Pageable page);
-
+    @Query("SELECT l FROM Lipstick l LEFT JOIN FETCH l.colors WHERE l.active = :active")
     List<Lipstick> findAllByActive(boolean active);
+
+    @Query("SELECT l FROM Lipstick l LEFT JOIN FETCH l.colors WHERE l.id = :id")
+    Optional<Lipstick> findLipstickWithColorsById(Integer id);
+
+    @Query("SELECT l FROM Lipstick l LEFT JOIN FETCH l.colors WHERE l.name = :name")
+    Optional<Lipstick> findLipstickWithColorsByName(String name);
+
+    @Query(value = "SELECT l FROM Lipstick l LEFT JOIN FETCH l.colors",
+            countQuery = "SELECT count(l) FROM Lipstick l")
+    Page<Lipstick> findLipstickWithColors(Pageable pageable);
+
+    @Query(value = "SELECT * from lipstick l where l.id = (SELECT lipstick_id from lipstick_color c where c.id = :colorId)",nativeQuery = true)
+    Optional<Lipstick> findLipstickByColorId(Integer colorId);
+
 }

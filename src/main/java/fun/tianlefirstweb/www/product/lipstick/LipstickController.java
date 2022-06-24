@@ -22,11 +22,17 @@ public class LipstickController {
         this.lipstickColorService = lipstickColorService;
     }
 
+    /**
+     * 根据口红id获取口红
+     */
     @GetMapping("/{lipstickId}")
     public ResponseEntity<Lipstick> getLipstick(@PathVariable Integer lipstickId){
         return ResponseEntity.ok(lipstickService.findById(lipstickId));
     }
 
+    /**
+     * 分页获取口红
+     */
     @GetMapping("/{page}/{size}")
     public ResponseEntity<List<Lipstick>> findLipsticksWithPagination(
             @PathVariable int page,
@@ -40,11 +46,17 @@ public class LipstickController {
         return ResponseEntity.ok(lipstickPage.getContent());
     }
 
+    /**
+     * 根据色号获取口红
+     */
     @GetMapping()
     public ResponseEntity<Lipstick> getLipstickByColor(@RequestParam Integer color){
         return ResponseEntity.ok(lipstickColorService.findById(color).getLipstick());
     }
 
+    /**
+     * 更新口红
+     */
     @PutMapping()
     public ResponseEntity<?> updateLipstick(@RequestBody Lipstick lipstick){
         lipstickService.update(lipstick);

@@ -22,13 +22,9 @@ public class TagService {
         tagRepository.save(tag);
     }
 
-    public Tag findById(Integer tagId) {
-        return tagRepository.findById(tagId)
-                .orElseThrow(() -> new EntityNotExistException("tag不存在"));
+    public Tag findTagWithColorsByTitle(TagTitle title) {
+        return tagRepository.findTagWithColorsByTitle(title);
     }
 
-    public Tag findByTitle(TagTitle title) {
-        return tagRepository.findByTitle(title)
-                .orElseThrow(() -> new EntityNotExistException("tag不存在"));
-    }
+
 }

@@ -1,20 +1,22 @@
 package fun.tianlefirstweb.www.product.tag;
 
-import fun.tianlefirstweb.www.product.lipstickColor.LipstickColorDTO;
+import fun.tianlefirstweb.www.product.lipstickColor.LipstickColor;
+import fun.tianlefirstweb.www.product.lipstickColor.LipstickColorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/tags")
 public class TagController {
 
     private final TagService tagService;
+    private final LipstickColorService lipstickColorService;
 
-    public TagController(TagService tagService) {
+    public TagController(TagService tagService, LipstickColorService lipstickColorService) {
         this.tagService = tagService;
+        this.lipstickColorService = lipstickColorService;
     }
 
     @GetMapping
@@ -29,11 +31,7 @@ public class TagController {
     }
 
     @GetMapping("/{tagTitle}/colors")
-    public ResponseEntity<List<LipstickColorDTO>> findColorsByTag(@PathVariable TagTitle tagTitle) {
-        Tag tag = tagService.findByTitle(tagTitle);
-        return ResponseEntity.ok(tag.getColors()
-                .stream()
-                .map(LipstickColorDTO::new)
-                .collect(Collectors.toList()));
+    public ResponseEntity<List<LipstickColor>> findColorsByTag(@PathVariable TagTitle tagTitle) {
+        return ResponseEntity.ok(lipstickColorService.findLipstickColorsByTagTitle(tagTitle));
     }
 }

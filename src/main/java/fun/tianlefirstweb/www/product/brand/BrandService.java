@@ -17,6 +17,9 @@ public class BrandService {
         this.brandRedisTemplate = brandRedisTemplate;
     }
 
+    /**
+     * 保存/更新品牌，双删缓存
+     */
     public void save(Brand brand){
         if(brandRepository.existsBrandByName(brand.getName())){
             throw new EntityAlreadyExistException(String.format("%s品牌已存在",brand.getName()));

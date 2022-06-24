@@ -24,12 +24,7 @@ public class Lipstick {
     private Integer id;
 
     @JsonManagedReference("lipstick-colors")
-    @OneToMany(
-            mappedBy = "lipstick",
-            cascade = ALL,
-            orphanRemoval = true,
-            fetch = EAGER
-    )
+    @OneToMany(mappedBy = "lipstick")
     private List<LipstickColor> colors;
 
     private String name;
@@ -41,7 +36,7 @@ public class Lipstick {
 
     @JsonBackReference("brand-lipsticks")
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "brand_id")
+    @JoinColumn(name = "brand_id", updatable = false)
     private Brand brand;
 
     public Lipstick() {

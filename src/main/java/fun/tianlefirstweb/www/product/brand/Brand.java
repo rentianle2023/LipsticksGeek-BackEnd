@@ -1,6 +1,8 @@
 package fun.tianlefirstweb.www.product.brand;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import fun.tianlefirstweb.www.product.lipstick.Lipstick;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +31,6 @@ public class Brand {
             orphanRemoval = true,
             fetch = LAZY
     )
-    @JsonBackReference("brand-lipsticks")
+    @JsonIgnore
     private List<Lipstick> lipsticks;
 }

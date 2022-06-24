@@ -1,5 +1,6 @@
 package fun.tianlefirstweb.www.product.lipstick;
 
+import fun.tianlefirstweb.www.product.lipstickColor.LipstickColorDTO;
 import lombok.Data;
 
 @Data

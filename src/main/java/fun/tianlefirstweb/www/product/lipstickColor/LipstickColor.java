@@ -27,7 +27,7 @@ public class LipstickColor {
 
     @JsonBackReference("lipstick-colors")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lipstick_id")
+    @JoinColumn(name = "lipstick_id",updatable = false)
     private Lipstick lipstick;
 
     @JsonBackReference("favorite-users")

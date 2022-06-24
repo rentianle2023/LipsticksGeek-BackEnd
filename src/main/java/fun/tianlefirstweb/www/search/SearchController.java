@@ -1,6 +1,5 @@
 package fun.tianlefirstweb.www.search;
 
-import fun.tianlefirstweb.www.product.lipstick.LipstickRepository;
 import fun.tianlefirstweb.www.product.lipstick.LipstickService;
 import fun.tianlefirstweb.www.search.lipstick.LipstickSearch;
 import fun.tianlefirstweb.www.search.lipstick.LipstickSearchService;
@@ -84,7 +83,7 @@ public class SearchController {
 
         List<LipstickSearch> lipsticks = new ArrayList<>();
         List<LipstickColorSearch> colors = new ArrayList<>();
-        lipstickService.findAll()
+        lipstickService.findAllActive()
                 .forEach(lipstick -> {
                     String brandName = lipstick.getBrand().getName();
                     lipsticks.add(
