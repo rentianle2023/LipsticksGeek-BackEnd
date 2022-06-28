@@ -24,7 +24,10 @@ public class Lipstick {
     private Integer id;
 
     @JsonManagedReference("lipstick-colors")
-    @OneToMany(mappedBy = "lipstick")
+    @OneToMany(
+            cascade = PERSIST,
+            mappedBy = "lipstick"
+    )
     private List<LipstickColor> colors;
 
     private String name;

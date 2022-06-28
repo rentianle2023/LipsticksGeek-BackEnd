@@ -24,9 +24,9 @@ spring:
       minimum-idle: 10
       read-only: false
   redis:
-    host: 47.106.137.238
+    host: 47.104.181.214
     password: ENC(ypsHAcE8q7BNlp3kq7XY8npjT563AoeM)
-    port: 6379
+    port: 6380
 logging:
   level:
     root: info
@@ -44,7 +44,7 @@ application:
     tokenPrefix : "Bearer "
     tokenExpirationAfterDays : 5
   elasticsearch:
-    url : "47.106.137.238:9200"
+    url : "47.104.181.214:9200"
   user:
     default:
       avatar : "https://cdn.acwing.com/media/user/profile/photo/192283_md_bc37717ec6.jpg"

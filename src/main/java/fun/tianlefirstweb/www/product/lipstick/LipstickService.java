@@ -56,8 +56,8 @@ public class LipstickService {
     /**
      * 更新口红信息
      */
-    public void update(Lipstick newLipstick){
-        lipstickRepository.save(newLipstick);
+    public void update(Lipstick lipstick){
+        lipstickRepository.update(lipstick.getId(),lipstick.getName(),lipstick.getPrice(),lipstick.getImageUrl());
     }
 
     /**
