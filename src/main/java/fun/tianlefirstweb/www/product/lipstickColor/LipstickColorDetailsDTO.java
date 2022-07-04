@@ -22,8 +22,8 @@ public class LipstickColorDetailsDTO {
 
     public LipstickColorDetailsDTO(LipstickColor color) {
         setColor(color);
-        setLipstick(color.getLipstick());
         setBrand(color.getLipstick().getBrand());
+        setLipstick(color.getLipstick());
     }
 
     public void setColor(LipstickColor color) {

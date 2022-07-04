@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.ResultSet;
 import java.util.List;
 
 @RestController()
@@ -50,5 +51,10 @@ public class BrandController {
     public ResponseEntity<?> saveBrand(@RequestBody Brand brand){
         brandService.save(brand);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{brandId}")
+    public ResponseEntity<Brand> getBrandById(@PathVariable Integer brandId) {
+        return ResponseEntity.ok(brandService.findById(brandId));
     }
 }

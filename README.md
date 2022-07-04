@@ -12,13 +12,13 @@
 - [x] 支持在线聊天的基础功能（WebSocket）
 - [x] 支持色号收藏，网站留言和回复（Mysql增删改查）
 - [x] 后台管理目前可以增删改口红
-- [ ] 完善后台管理，给色号添加不同tag，分类推荐
-- [ ] 使用缓存加快访问速度（Redis）
+- [x] 完善后台管理，给色号添加不同tag，分类推荐
+- [x] 使用缓存加快访问速度（Redis）
 
 ## 技术栈
 后端Spring全家桶：包含SpringDataJpa,SpringDataElasticsearch,SpringSecurity,SpringWebsocket等
 
-数据库方面：搜索引擎ElasticSearch，关系型数据库Mysql，缓存Redis（即将上线）
+数据库方面：搜索引擎ElasticSearch，关系型数据库Mysql，缓存Redis（
 
 前端：ReactJS + TailwindCSS + 各种React Component库
 

@@ -1,5 +1,6 @@
 package fun.tianlefirstweb.www.product.lipstick;
 
+import fun.tianlefirstweb.www.cache.TagRedisTemplate;
 import fun.tianlefirstweb.www.exception.EntityNotExistException;
 import fun.tianlefirstweb.www.product.brand.BrandRepository;
 import org.springframework.data.domain.Page;
@@ -13,10 +14,14 @@ public class LipstickService {
 
     private final LipstickRepository lipstickRepository;
     private final BrandRepository brandRepository;
+    private final TagRedisTemplate tagRedisTemplate;
 
-    public LipstickService(LipstickRepository lipstickRepository, BrandRepository brandRepository) {
+    public LipstickService(LipstickRepository lipstickRepository,
+                           BrandRepository brandRepository,
+                           TagRedisTemplate tagRedisTemplate) {
         this.lipstickRepository = lipstickRepository;
         this.brandRepository = brandRepository;
+        this.tagRedisTemplate = tagRedisTemplate;
     }
 
     /**
@@ -56,8 +61,19 @@ public class LipstickService {
     /**
      * 更新口红信息
      */
-    public void update(Lipstick lipstick){
-        lipstickRepository.update(lipstick.getId(),lipstick.getName(),lipstick.getPrice(),lipstick.getImageUrl());
+    public void update(Lipstick newLipstick){
+        Lipstick persistLipstick = lipstickRepository.findById(newLipstick.getId())
+                .orElseThrow(() -> new EntityNotExistException("口红不存在"));
+        persistLipstick.setImageUrl(newLipstick.getImageUrl());
+        persistLipstick.setName(newLipstick.getName());
+        persistLipstick.setPrice(newLipstick.getPrice());
+        persistLipstick.setActive(newLipstick.getActive());
+
+
+        //lipstick change should flush all the cache about related tag, 这个双删很勉强...
+        tagRedisTemplate.deleteAll();
+        lipstickRepository.save(persistLipstick);
+        tagRedisTemplate.deleteAll();
     }
 
     /**

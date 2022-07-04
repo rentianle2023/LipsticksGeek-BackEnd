@@ -1,7 +1,7 @@
 package fun.tianlefirstweb.www.chat;
 
-import org.springframework.data.redis.core.ListOperations;
-import org.springframework.data.redis.core.RedisTemplate;
+import fun.tianlefirstweb.www.cache.BrandRedisTemplate;
+import fun.tianlefirstweb.www.cache.ChatRedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -9,8 +9,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.Duration;
@@ -22,14 +20,15 @@ public class ChatController{
 
     private final SimpMessagingTemplate messagingTemplate;
     private final SimpUserRegistry simpUserRegistry;
-    private final RedisTemplate<String,Object> redisTemplate;
+    private final ChatRedisTemplate chatRedisTemplate;
     private final String MESSAGES_KEY = "messages";
 
     public ChatController(SimpMessagingTemplate messagingTemplate,
-                          SimpUserRegistry simpUserRegistry, RedisTemplate<String,Object> redisTemplate) {
+                          SimpUserRegistry simpUserRegistry,
+                          ChatRedisTemplate chatRedisTemplate) {
         this.messagingTemplate = messagingTemplate;
         this.simpUserRegistry = simpUserRegistry;
-        this.redisTemplate = redisTemplate;
+        this.chatRedisTemplate = chatRedisTemplate;
     }
 
     /**
@@ -42,15 +41,7 @@ public class ChatController{
         switch (message.getStatus()) {
             case JOIN: message.setData(String.valueOf(simpUserRegistry.getUserCount())); break;
             case LEAVE: message.setData(String.valueOf(simpUserRegistry.getUserCount() - 1)); break;
-            case MESSAGE: {
-                redisTemplate.opsForList().rightPush(MESSAGES_KEY,message);
-                Boolean expire = redisTemplate.expireAt(
-                        MESSAGES_KEY,
-                        Instant.now().plus(Duration.ofHours(1))
-                );
-                System.out.println(expire);
-                System.out.println(redisTemplate.getExpire(MESSAGES_KEY));
-            }
+            case MESSAGE: chatRedisTemplate.save(message); break;
         }
 
         messagingTemplate.convertAndSend("/chatroom/public",message);
@@ -69,8 +60,8 @@ public class ChatController{
 
     @GetMapping("/messages")
     @ResponseBody
-    public ResponseEntity<List> getAllChatMessages(){
-        List messages = redisTemplate.opsForList().range(MESSAGES_KEY, 0, -1);
+    public ResponseEntity<List<Message>> getAllChatMessages(){
+        List<Message> messages = chatRedisTemplate.findAll();
         return ResponseEntity.ok(messages);
     }
 }

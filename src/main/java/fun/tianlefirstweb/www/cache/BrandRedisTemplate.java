@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class BrandRedisTemplate {
 
     private final RedisTemplate<String, Object> redisTemplate;
-    private final String BRAND_KEY = "BRAND";
+    private final String BRAND_KEY = "brand";
     private final HashOperations<String,Integer,Brand> hashOperations;
 
     public BrandRedisTemplate(RedisTemplate<String,Object> redisTemplate) {
@@ -37,5 +37,9 @@ public class BrandRedisTemplate {
         Map<Integer, Brand> brandsMap = brands.stream().collect(
                 Collectors.toMap(Brand::getId, brand -> brand));
         hashOperations.putAll(BRAND_KEY,brandsMap);
+    }
+
+    public Boolean hasKey() {
+        return redisTemplate.hasKey(BRAND_KEY);
     }
 }

@@ -2,8 +2,10 @@ package fun.tianlefirstweb.www.product.brand;
 
 import fun.tianlefirstweb.www.cache.BrandRedisTemplate;
 import fun.tianlefirstweb.www.exception.EntityAlreadyExistException;
+import fun.tianlefirstweb.www.exception.EntityNotExistException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -33,13 +35,17 @@ public class BrandService {
      * 获取所有品牌信息，缓存优先
      */
     public List<Brand> findBrands(){
-        List<Brand> cachedBrands = brandRedisTemplate.findAll();
-        if(!cachedBrands.isEmpty()) {
-            return cachedBrands;
+        if(brandRedisTemplate.hasKey()) {
+            return brandRedisTemplate.findAll();
         }
 
         List<Brand> brands = brandRepository.findAll();
         brandRedisTemplate.saveAll(brands);
         return brands;
+    }
+
+    public Brand findById(Integer brandId) {
+        return brandRepository.findById(brandId)
+                .orElseThrow(() -> new EntityNotExistException("品牌不存在"));
     }
 }
