@@ -1,9 +1,11 @@
 # LIPSTICK GEEK 口红极客
-网址：http://www.tianlefirstweb.fun
+**网址：http://www.tianlefirstweb.fun**
 
 **本网站励志于帮助广大男性同胞，给女朋友/老婆挑选口红**
 
 **本项目为本人独立完成的第一个项目，如果大家觉得有意思请点个star哦~ 这将对我的转行求职有极大的帮助！谢谢！**
+
+项目灵感来源：https://github.com/Ovilia/lipstick
 
 ## 当前功能
 - [x] 数据包含8大口红品牌官方最新色号（使用Jsoup，HtmlUnit，Selenium爬取）
