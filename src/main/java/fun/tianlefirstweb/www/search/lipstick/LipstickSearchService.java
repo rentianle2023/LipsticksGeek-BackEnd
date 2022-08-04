@@ -11,6 +11,7 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.search.SearchHit;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -58,7 +59,7 @@ public class LipstickSearchService {
 
             return lipsticks;
         } catch (IOException e) {
-            throw new UnableToConnectException("failed to connect elasticsearch server");
+            throw new RuntimeException(e.getMessage());
         }
     }
 

@@ -4,6 +4,7 @@ import fun.tianlefirstweb.www.exception.EntityNotExistException;
 import fun.tianlefirstweb.www.product.lipstick.Lipstick;
 import fun.tianlefirstweb.www.product.lipstick.LipstickService;
 import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -56,5 +57,13 @@ public class BrandController {
     @GetMapping("/{brandId}")
     public ResponseEntity<Brand> getBrandById(@PathVariable Integer brandId) {
         return ResponseEntity.ok(brandService.findById(brandId));
+    }
+
+    @Autowired
+    private BrandRepository brandRepository;
+
+    @GetMapping("/test")
+    public ResponseEntity<List<BrandRepository.BrandLipstickCount>> jpaComplexProjectionTest(){
+        return ResponseEntity.ok(brandRepository.findBrandAndLipstickCount());
     }
 }

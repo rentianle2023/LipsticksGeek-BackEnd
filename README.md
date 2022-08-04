@@ -1,9 +1,9 @@
 # LIPSTICK GEEK 口红极客
 **网址：http://www.tianlefirstweb.fun**
 
-**本网站励志于帮助广大男性同胞，给女朋友/老婆挑选口红**
+本网站励志于帮助广大男性同胞，给女朋友/老婆挑选口红
 
-**本项目为本人独立完成的第一个项目，如果大家觉得有意思请点个star哦~ 这将对我的转行求职有极大的帮助！谢谢！**
+本项目为本人独立完成的第一个项目，如果大家觉得有意思请**点个star**，这将对我的转行求职有极大的帮助！谢谢！
 
 项目灵感来源：https://github.com/Ovilia/lipstick
 
@@ -16,11 +16,12 @@
 - [x] 后台管理目前可以增删改口红
 - [x] 完善后台管理，给色号添加不同tag，分类推荐
 - [x] 使用缓存加快访问速度（Redis）
+- [ ] 通过邮箱重置密码
 
 ## 技术栈
 后端Spring全家桶：包含SpringDataJpa,SpringDataElasticsearch,SpringSecurity,SpringWebsocket等
 
-数据库方面：搜索引擎ElasticSearch，关系型数据库Mysql，缓存Redis（
+数据库方面：搜索引擎ElasticSearch，关系型数据库Mysql，缓存Redis
 
 前端：ReactJS + TailwindCSS + 各种React Component库
 

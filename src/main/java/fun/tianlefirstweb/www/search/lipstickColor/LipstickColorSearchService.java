@@ -62,8 +62,7 @@ public class LipstickColorSearchService {
             System.out.println(searchResponse.getHits().getTotalHits());
             return colors;
         } catch (IOException e) {
-            throw new RuntimeException();
-            //TODO: handle exception
+            throw new RuntimeException(e.getMessage());
         }
     }
 

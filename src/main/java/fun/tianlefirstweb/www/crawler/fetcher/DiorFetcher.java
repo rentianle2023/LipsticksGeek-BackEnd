@@ -69,21 +69,18 @@ public class DiorFetcher extends LipstickFetcher {
                 .map(link -> getLipstick(driver, link).orElse(null))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
-        for (var lipstick : lipsticks) {
-            System.out.println(lipstick.getName());
-            System.out.println(lipstick.getColors().size());
-        }
-
         return lipsticks;
     }
 
-    private Optional<Lipstick> getLipstick(ChromeDriver driver, String url) {
+    public Optional<Lipstick> getLipstick(ChromeDriver driver, String url) {
         try {
+            System.out.println(url);
             driver.get(url);
             AtomicReference<Integer> cnt = new AtomicReference<>(0);
 
             String lipstickImageUrl = driver.findElement(new By.ByClassName("product-media__image")).findElement(new By.ByTagName("img")).getAttribute("src");
             String lipstickName = driver.findElement(new By.ByClassName("product-titles")).findElement(new By.ByTagName("span")).getText();
+            System.out.println(lipstickName);
             List<LipstickColor> colors = driver.findElement(new By.ByClassName("swatches-bloc")).findElements(new By.ByClassName("swatch"))
                     .stream().map(div -> {
                         String colorLink = div.findElement(new By.ByTagName("img")).getAttribute("src");
@@ -104,9 +101,6 @@ public class DiorFetcher extends LipstickFetcher {
             String lipstickPrice = driver.findElement(new By.ByClassName("variation-option-price")).getText();
             Lipstick lipstick = new Lipstick(lipstickName, lipstickPrice, lipstickImageUrl);
             lipstick.setColors(colors);
-            System.out.println(cnt.get());
-            System.out.println(lipstickName + ":" + lipstickPrice);
-            System.out.println(lipstickImageUrl);
             return Optional.of(lipstick);
         } catch (Exception e) {
             System.out.println("跳过没有色号的套装");

@@ -32,6 +32,7 @@ public class CommentController {
     @PostMapping
     public ResponseEntity<CommentDTO> addComment(Authentication authentication,
                                         @Valid @RequestBody Comment comment){
+        System.out.println(authentication);
         ApplicationUser user = userService.findByUsername(authentication.getName());
         comment.setUser(user);
         return ResponseEntity.ok(new CommentDTO(commentService.addComment(comment)));
