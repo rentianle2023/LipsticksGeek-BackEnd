@@ -1,19 +1,10 @@
 package fun.tianlefirstweb.www.product.brand;
 
-import fun.tianlefirstweb.www.exception.EntityNotExistException;
 import fun.tianlefirstweb.www.product.lipstick.Lipstick;
 import fun.tianlefirstweb.www.product.lipstick.LipstickService;
-import org.apache.coyote.Response;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
-import java.sql.ResultSet;
 import java.util.List;
 
 @RestController()
@@ -32,7 +23,7 @@ public class BrandController {
      * 获得所有的Brand信息，展示在百科的第一个界面
      */
     @GetMapping
-    public ResponseEntity<List<Brand>> getBrands(){
+    public ResponseEntity<List<Brand>> getBrands() {
         return ResponseEntity.ok(brandService.findBrands());
     }
 
@@ -41,7 +32,7 @@ public class BrandController {
      * TODO 避免Eager获取色号，不是很好的方式
      */
     @GetMapping("/{brandId}/lipsticks")
-    public ResponseEntity<List<Lipstick>> getLipsticks(@PathVariable Integer brandId){
+    public ResponseEntity<List<Lipstick>> getLipsticks(@PathVariable Integer brandId) {
         return ResponseEntity.ok(lipstickService.findByBrandId(brandId));
     }
 
@@ -49,7 +40,7 @@ public class BrandController {
      * 保存/更新品牌信息，一个没有被调用过的接口
      */
     @PostMapping
-    public ResponseEntity<?> saveBrand(@RequestBody Brand brand){
+    public ResponseEntity<?> saveBrand(@RequestBody Brand brand) {
         brandService.save(brand);
         return ResponseEntity.ok().build();
     }
@@ -57,13 +48,5 @@ public class BrandController {
     @GetMapping("/{brandId}")
     public ResponseEntity<Brand> getBrandById(@PathVariable Integer brandId) {
         return ResponseEntity.ok(brandService.findById(brandId));
-    }
-
-    @Autowired
-    private BrandRepository brandRepository;
-
-    @GetMapping("/test")
-    public ResponseEntity<List<BrandRepository.BrandLipstickCount>> jpaComplexProjectionTest(){
-        return ResponseEntity.ok(brandRepository.findBrandAndLipstickCount());
     }
 }

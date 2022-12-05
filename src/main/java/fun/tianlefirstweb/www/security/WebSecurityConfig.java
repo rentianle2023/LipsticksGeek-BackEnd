@@ -26,11 +26,9 @@ import static org.springframework.http.HttpMethod.*;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtConfig jwtConfig;
-    private final SecretKey secretKey;
 
-    public WebSecurityConfig(JwtConfig jwtConfig, SecretKey secretKey) {
+    public WebSecurityConfig(JwtConfig jwtConfig) {
         this.jwtConfig = jwtConfig;
-        this.secretKey = secretKey;
     }
 
     @Bean
@@ -41,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000","http://192.168.101.19:3000","http://www.tianlefirstweb.fun"));
+        configuration.setAllowedOrigins(List.of("http://localhost:3000","http://192.168.101.19:3000","http://www.tianlefirstweb.fun","http://tianlefirstweb.fun"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("authorization", "content-type"));
         configuration.setExposedHeaders(List.of("authorization", "X-Total-Count"));
