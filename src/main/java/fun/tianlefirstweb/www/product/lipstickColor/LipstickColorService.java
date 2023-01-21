@@ -6,7 +6,7 @@ import fun.tianlefirstweb.www.product.tag.Tag;
 import fun.tianlefirstweb.www.product.tag.TagTitle;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -63,9 +63,8 @@ public class LipstickColorService {
      */
     public LipstickColorDetailsDTO findColorDetailsById(Integer colorId) {
         //根据色号id获取detail，key = 'brand'brandId_colorId
-
-
         LipstickColor color = findById(colorId);
+        System.out.println(color.getCreateDateTime());
         return new LipstickColorDetailsDTO(color);
     }
 
@@ -88,5 +87,10 @@ public class LipstickColorService {
                 .collect(Collectors.toList());
         tagRedisTemplate.save(tagTitle,colorDetailsList);
         return colorDetailsList;
+    }
+
+    public LipstickColor findLatestLipstickColor() {
+        return lipstickColorRepository.findTopByOrderByIdDesc()
+                .orElseThrow(() -> new EntityNotExistException("无法获取最新口红色号"));
     }
 }

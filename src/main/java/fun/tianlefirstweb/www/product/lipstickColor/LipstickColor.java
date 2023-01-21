@@ -10,6 +10,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Entity
@@ -24,6 +26,7 @@ public class LipstickColor {
 
     private String name;
     private String hexColor;
+    private ZonedDateTime createDateTime;
 
     @JsonBackReference("lipstick-colors")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -45,6 +48,7 @@ public class LipstickColor {
     public LipstickColor(String name, String hexColor) {
         this.name = name;
         this.hexColor = hexColor;
+        this.createDateTime = ZonedDateTime.now(ZoneId.of("Asia/Shanghai"));
         trimHexColor();
     }
 

@@ -7,6 +7,7 @@ import fun.tianlefirstweb.www.product.tag.TagService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @RestController
@@ -59,5 +60,12 @@ public class LipstickColorController {
     public ResponseEntity<LipstickColorDetailsDTO> findLipstickDetailsById(@PathVariable Integer colorId) {
         return ResponseEntity.ok(
                 lipstickColorService.findColorDetailsById(colorId));
+    }
+
+    @GetMapping("/latest-time")
+    public ResponseEntity<ZonedDateTime> findLatestColorUpdateTime() {
+        //TODO: return the latest n color for different brand
+        return ResponseEntity.ok(
+                lipstickColorService.findLatestLipstickColor().getCreateDateTime());
     }
 }

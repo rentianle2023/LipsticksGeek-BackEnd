@@ -20,7 +20,11 @@ import java.util.stream.Collectors;
 
 import static fun.tianlefirstweb.www.crawler.BrandInfo.TOMFORD;
 
+/**
+ * could not fetch latest lipstick colors from official website
+ */
 @Component
+@Deprecated
 public class TomFordFetcher extends LipstickFetcher{
 
     private Document getDocument(String url){
